@@ -1,0 +1,42 @@
+{
+  "name": "generator-kikwit",
+  "version": "1.0.0",
+  "description": "yeoman-generator",
+  "homepage": "https://github.com/kikwit/generator-kikwit#readme",
+  "author": "Elondo Mbonze <mbonze.elondo@gmail.com>",
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator",
+    "kikwit"
+  ],
+  "scripts": {
+    "test": "gulp",
+    "prepublish": "gulp prepublish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kikwit/generator-kikwit.git"
+  },
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/kikwit/generator-kikwit/issues"
+  },
+  "dependencies": {
+    "yeoman-generator": "^0.21.1",
+    "chalk": "^1.0.0",
+    "yosay": "^1.0.2"
+  },
+  "devDependencies": {
+    "yeoman-assert": "^2.0.0",
+    "gulp": "^3.6.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-exclude-gitignore": "^1.0.0",
+    "gulp-istanbul": "^0.9.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-plumber": "^1.0.0",
+    "gulp-nsp": "^2.1.0",
+    "gulp-coveralls": "^0.1.0"
+  }
+}
