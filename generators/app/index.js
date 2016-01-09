@@ -4,70 +4,166 @@ var generators = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 
+const consolidateVersion = '^0.13.1';
+
+const viewEngines = [
+    { name: 'EJS', value: 'ejs', version: '^2.3.4' },
+    { name: 'Jade', value: 'jade', version: '^1.11.0' },
+    { name: 'Handlebars', value: 'handlebars', version: '^4.0.5' },
+    { name: 'Nunjucks', value: 'nunjucks', version: '^2.3.0' },
+    { name: 'Swig', value: 'swig', version: '^1.4.2'},
+    { name: 'None of the above' }
+];
+
+const testingFrameworks = [
+    { name: 'Jasmine', value: 'jasmine', version: '^2.4.1' },
+    { name: 'Mocha', value: 'mocha', version: '^2.3.4' },
+    { name: 'Buster.js', value: 'buster', version:'^0.8.0' },
+    { name: 'None of the above' }
+];
+
+const assertionLibraries = [
+    { name: 'Chai', value: 'chai', version: '^3.4.2' },
+    { name: 'Should.js', value: 'should', version: '^8.0.2' },
+    { name: 'None of the above' }
+];
+
+const dependencies = {
+    'babel-core': '^6.3.26',
+    'babel-plugin-transform-decorators-legacy': '^1.3.4',
+    'babel-plugin-transform-es2015-destructuring': '^6.3.15',
+    'babel-plugin-transform-es2015-modules-commonjs': '^6.3.16',
+    'babel-plugin-transform-es2015-parameters': '^6.3.26',
+    'babel-plugin-transform-es2015-sticky-regex': '^6.3.13',
+    'babel-plugin-transform-es2015-unicode-regex': '^6.3.13',
+    'babel-plugin-transform-strict-mode': '^6.3.13'
+};
+
+const autoRestartOnChangeDependency = {
+    value: 'nodemon', version: '^1.8.1'   
+};
+
 module.exports = generators.Base.extend({
 
     constructor: function() {
-   
+        
         generators.Base.apply(this, arguments);
-
-        // this._.templateSettings.interpolate = /<%=([\s\S]+?)%>/g;
     },
 
-    prompting: {
+    prompting: function() {
+        
+        let done = this.async();
 
-        appName: function() {
+        let prompts = [
+            {
+                type: 'input',
+                name: 'name',
+                message: 'Enter a name for your app:',
+                default: this.appname
+            },
+            {
+                type: 'list',
+                name: 'appType',
+                message: 'What sort of app are you creating?',
+                choices: [
+                    { name: "Website", value: 'website' },
+                    { name: 'API', value: 'api' }
+                ],
+                default: 'website'
+            },
+            {
+                type: 'confirm',
+                name: 'addViewEngine',
+                message: 'Would you like to add a view engine?',
+                default: true,
+                when: function (answers) {
+                    return answers.appType == 'website';
+                }
+            },
+            {
+                type: 'list',
+                name: 'viewEngine',
+                message: 'Select a view engine',
+                choices: viewEngines,
+                when: function (answers) {
+                    return answers.addViewEngine;
+                }
+            },
+            {
+                type: 'list',
+                name: 'testingFramework',
+                message: 'Select a testing framework',
+                choices: testingFrameworks,
+                default: 'mocha'
+            },
+            {
+                type: 'list',
+                name: 'assertionLibrary',
+                message: 'Select an assertion library',
+                choices: assertionLibraries,
+                default: 'chai',
+                when: function (answers) {
+                    return answers.testingFramework && answers.testingFramework != 'buster';
+                }
+            },
+            {
+                type: 'confirm',
+                name: 'autoRestartOnChange',
+                message: 'Auto-restart the server on code change? (uses nodemon)',
+                default: true
+            },
+        ];
 
-            let done = this.async();
+        this.prompt(prompts, (answers) => {
 
-            let prompt = [
-                {
-                    type: 'input',
-                    name: 'appName',
-                    message: 'Enter a name for your app:',
-                },
-            ];
-
-            this.prompt(prompt, (answers) => {
-
-                this.options.appName = answers.appName;
-                done();
-            });
-        },
-
-        appType: function() {
-
-            let done = this.async();
-
-            let prompt = [
-                {
-                    type: 'list',
-                    name: 'appType',
-                    message: 'What sort of app are you creating?',
-                    choices: [
-                        { name: "Website", value: "website" },
-                        { name: "API", value: "api" }
-                    ],
-                    default: 'website'
-                },
-            ];
-
-            this.prompt(prompt, (answers) => {
-
-                this.options.appType = answers.appType;
-                done();
-            });
-        }
+            this.options = answers;
+            done();
+        });
+            
     },
 
     writing: function()  {
+        
+        var pkg = {
+            name: this.options.name,
+            version: '0.0.1',
+            main: 'boot.js',
+            scripts: {
+                start: 'nodemon --ignore public/ --ignore tests/ ./boot.js',
+                test: 'mocha --compilers js:babel-core/register tests/**/*.js'
+            },
+            dependencies: dependencies,
+            devDependencies: {}
+        };
+        
+        if (this.options.viewEngine) {
+            
+            let viewEngine = viewEngines.find(x => x.value == this.options.viewEngine);
+            
+            pkg.dependencies[viewEngine.value] = viewEngine.version;
+            pkg.dependencies.consolidate = consolidateVersion;
+        }
+        
+        if (this.options.testingFramework) {
+            
+            let testingFramework = testingFrameworks.find(x => x.value == this.options.testingFramework);
+            
+            pkg.devDependencies[testingFramework.value] = testingFramework.version;
+        }
+        
+        if (this.options.assertionLibrary) {
+            
+            let assertionLibrary = assertionLibraries.find(x => x.value == this.options.assertionLibrary);
+            
+            pkg.devDependencies[assertionLibrary.value] = assertionLibrary.version;
+        }
+        
+        if (this.options.autoRestartOnChange) {
 
-        this.fs.copyTpl(
-            this.templatePath('_package.json'),
-            this.destinationPath('package.json'),
-            { 
-                appName: this.options.appName
-            }
-        );
+            pkg.devDependencies[autoRestartOnChangeDependency.value] = autoRestartOnChangeDependency.version;
+        }
+
+        this.write('package.json', JSON.stringify(pkg, null, '\t'));   
 
         this.fs.copy(
             this.templatePath('boot.js'),
@@ -92,12 +188,15 @@ module.exports = generators.Base.extend({
             this.directory('public');
         }
     },
-
+    
     install: function() {
 
         this.installDependencies();
     }
-
+    
 });
+
+
+
 
 

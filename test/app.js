@@ -4,10 +4,10 @@ var assert = require('yeoman-assert');
 var helpers = require('yeoman-generator').test;
 
 describe('generator-kikwit:app', function () {
+    
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/app'))
-      .withOptions({someOption: true})
-      .withPrompts({someAnswer: true})
+      .withPrompts({appName: 'test-kikwit'})
       .on('end', done);
   });
 

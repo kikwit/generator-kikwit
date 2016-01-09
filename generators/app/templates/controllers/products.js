@@ -9,7 +9,7 @@ export default class products {
 	list(ctx) {
 	
 		setTimeout(() => {
-	    ctx.dependencies.allServ.save();            
+           
 			let routeURL = ctx.routeURL('remLink', {item: '987654', id: 746 }, { works: true, gotIt: 'yes'});
 			console.log('routeURL', routeURL);
 			ctx.send('LIST!');
