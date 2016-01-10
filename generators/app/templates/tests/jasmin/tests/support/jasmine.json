@@ -4,7 +4,7 @@
     "**/*.js"
   ],
   "helpers": [
-    "helpers/**/*.js"
+    "../node_modules/babel-core/register.js"
   ],
   "stopSpecOnExpectationFailure": false,
   "random": false

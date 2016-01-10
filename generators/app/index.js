@@ -37,7 +37,7 @@ const testingFrameworks = [
 ];
 
 const assertionLibraries = [
-    { name: 'Chai', value: 'chai', version: '^3.4.2' },
+    { name: 'Chai', value: 'chai', version: '^3.4.1' },
     { name: 'Should.js', value: 'should', version: '^8.0.2' },
     { name: 'None of the above' }
 ];
@@ -67,6 +67,8 @@ module.exports = generators.Base.extend({
     prompting: function() {
         
         let done = this.async();
+        
+        this.log(yosay(`Welcome to ${chalk.yellow.bold('Kikwit')} generator!`));
 
         let prompts = [
             {
@@ -207,7 +209,8 @@ module.exports = generators.Base.extend({
     
     install: function() {
 
-        this.installDependencies();
+        this.log(`\r\nRunning ${chalk.yellow.bold('npm install')} to install dependencies. If it fails please try running it yourself.\r\n`);
+        this.npmInstall();
     }
     
 });
