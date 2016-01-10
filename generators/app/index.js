@@ -16,9 +16,23 @@ const viewEngines = [
 ];
 
 const testingFrameworks = [
-    { name: 'Jasmine', value: 'jasmine', version: '^2.4.1' },
-    { name: 'Mocha', value: 'mocha', version: '^2.3.4' },
-    { name: 'Buster.js', value: 'buster', version:'^0.8.0' },
+    { name: 'Jasmine', value: 'jasmine', version: '^2.4.1', npmScript: 'jasmine JASMINE_CONFIG_PATH=tests/support/jasmine.json', copyFiles: (gen) => {
+        gen.directory('tests/jasmin/tests', 'tests');
+    }},
+    { name: 'Mocha', value: 'mocha', version: '^2.3.4', npmScript: 'mocha --compilers js:babel-core/register tests/**/*.js', copyFiles: (gen) => {
+        gen.directory('tests/mocha/tests', 'tests');
+    }},
+    { name: 'Buster.js', value: 'buster', version:'^0.8.0', npmScript: 'buster-test --config tests/buster.js', copyFiles: (gen) => {
+
+        gen.fs.copyTpl(
+            gen.templatePath('tests/buster/buster.js'),
+            gen.destinationPath('tests/buster.js'),
+            { 
+                name: gen.options.name
+            }
+        );
+        gen.directory('tests/buster/tests', 'tests');
+    }},
     { name: 'None of the above' }
 ];
 
@@ -93,15 +107,13 @@ module.exports = generators.Base.extend({
                 type: 'list',
                 name: 'testingFramework',
                 message: 'Select a testing framework',
-                choices: testingFrameworks,
-                default: 'mocha'
+                choices: testingFrameworks
             },
             {
                 type: 'list',
                 name: 'assertionLibrary',
                 message: 'Select an assertion library',
                 choices: assertionLibraries,
-                default: 'chai',
                 when: function (answers) {
                     return answers.testingFramework && answers.testingFramework != 'buster';
                 }
@@ -130,7 +142,7 @@ module.exports = generators.Base.extend({
             main: 'boot.js',
             scripts: {
                 start: 'nodemon --ignore public/ --ignore tests/ ./boot.js',
-                test: 'mocha --compilers js:babel-core/register tests/**/*.js'
+                test: 'echo "Error: no test specified" && exit 1'
             },
             dependencies: dependencies,
             devDependencies: {}
@@ -149,6 +161,11 @@ module.exports = generators.Base.extend({
             let testingFramework = testingFrameworks.find(x => x.value == this.options.testingFramework);
             
             pkg.devDependencies[testingFramework.value] = testingFramework.version;
+            pkg.scripts.test = testingFramework.npmScript;
+            
+            if (testingFramework.copyFiles) {
+                testingFramework.copyFiles(this);      
+            }
         }
         
         if (this.options.assertionLibrary) {
@@ -181,7 +198,6 @@ module.exports = generators.Base.extend({
         );
 
         this.directory('controllers');
-        this.directory('tests');
 
         if (this.options.appType == 'website') {
 
