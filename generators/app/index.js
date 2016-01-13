@@ -1,4 +1,6 @@
 'use strict';
+var fs = require('fs');
+var path = require('path');
 
 var generators = require('yeoman-generator');
 var chalk = require('chalk');
@@ -7,12 +9,12 @@ var yosay = require('yosay');
 const consolidateVersion = '^0.13.1';
 
 const viewEngines = [
-    { name: 'EJS', value: 'ejs', version: '^2.3.4' },
-    { name: 'Jade', value: 'jade', version: '^1.11.0' },
-    { name: 'Handlebars', value: 'handlebars', version: '^4.0.5' },
-    { name: 'Nunjucks', value: 'nunjucks', version: '^2.3.0' },
-    { name: 'Swig', value: 'swig', version: '^1.4.2'},
-    { name: 'None of the above' }
+    { name: 'EJS', value: 'ejs', extension: 'ejs', version: '^2.3.4' },
+    { name: 'Jade', value: 'jade', extension: 'jade', version: '^1.11.0' },
+    { name: 'Handlebars', value: 'handlebars', extension: 'hbs', version: '^4.0.5' },
+    { name: 'Nunjucks', value: 'nunjucks', extension: 'html', version: '^2.3.0' },
+    { name: 'Swig', value: 'swig', extension: 'swig', version: '^1.4.2'},
+    { name: 'None of the above', value: null }
 ];
 
 const testingFrameworks = [
@@ -39,7 +41,7 @@ const testingFrameworks = [
 const assertionLibraries = [
     { name: 'Chai', value: 'chai', version: '^3.4.1' },
     { name: 'Should.js', value: 'should', version: '^8.0.2' },
-    { name: 'None of the above' }
+    { name: 'None of the above', value: null }
 ];
 
 const dependencies = {
@@ -117,7 +119,7 @@ module.exports = generators.Base.extend({
                 message: 'Select an assertion library',
                 choices: assertionLibraries,
                 when: function (answers) {
-                    return answers.testingFramework && answers.testingFramework != 'buster';
+                    return answers.testingFramework && answers.testingFramework == 'mocha';
                 }
             },
             {
@@ -154,6 +156,8 @@ module.exports = generators.Base.extend({
             
             let viewEngine = viewEngines.find(x => x.value == this.options.viewEngine);
             
+            this.options.viewEngine = viewEngine;
+            
             pkg.dependencies[viewEngine.value] = viewEngine.version;
             pkg.dependencies.consolidate = consolidateVersion;
         }
@@ -181,6 +185,8 @@ module.exports = generators.Base.extend({
 
             pkg.devDependencies[autoRestartOnChangeDependency.value] = autoRestartOnChangeDependency.version;
         }
+        
+        this.log('\r\n');
 
         this.write('package.json', JSON.stringify(pkg, null, '\t'));   
 
@@ -189,9 +195,10 @@ module.exports = generators.Base.extend({
             this.destinationPath('boot.js')
         );
 
-        this.fs.copy(
+        this.fs.copyTpl(
             this.templatePath('app.js'),
-            this.destinationPath('app.js')
+            this.destinationPath('app.js'),
+            this.options
         );
 
         this.fs.copy(
@@ -199,11 +206,21 @@ module.exports = generators.Base.extend({
             this.destinationPath('.babelrc')
         );
 
-        this.directory('controllers');
+        fs.mkdirSync(this.destinationPath('controllers'));
+        
+        this.fs.copyTpl(
+            this.templatePath('controllers/products.js'),
+            this.destinationPath('controllers/products.js'),
+            this.options
+        );
 
         if (this.options.appType == 'website') {
-
             this.directory('public');
+        }
+        
+        if (this.options.viewEngine) {
+            fs.mkdirSync(this.destinationPath('views'));
+            this.directory(`views/${this.options.viewEngine.value}/Products`, 'views/Products')
         }
     },
     
