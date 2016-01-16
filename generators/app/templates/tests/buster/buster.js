@@ -1,6 +1,6 @@
 var config = module.exports;
  
-config["Tests"] = {
+config["<%= appname %> Tests"] = {
     environment: "node",
     rootPath: "../",
     tests: [

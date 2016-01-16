@@ -1,0 +1,27 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<div class="entry">
+		  <h1>Food bank</h1>
+		  <div class="body">
+		    <table>
+			<thead>
+				<tr>
+					<th>Type</th>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody>
+			<%% items.forEach(item => { %>
+				<tr>
+					<td><%%= item.type %></td>
+					<td><%%=  item.name %></td>
+				</tr>
+			<%% }) %>
+			</tbody>
+		    </table>
+		  </div>
+		</div>
+	</body>
+</html>

@@ -10,10 +10,10 @@ const consolidateVersion = '^0.13.1';
 
 const viewEngines = [
     { name: 'EJS', value: 'ejs', extension: 'ejs', version: '^2.3.4' },
-    { name: 'Jade', value: 'jade', extension: 'jade', version: '^1.11.0' },
     { name: 'Handlebars', value: 'handlebars', extension: 'hbs', version: '^4.0.5' },
+    { name: 'Jade', value: 'jade', extension: 'jade', version: '^1.11.0' },
+    { name: 'Mustache', value: 'mustache', extension: 'mustache', version: '^2.2.1'},
     { name: 'Nunjucks', value: 'nunjucks', extension: 'html', version: '^2.3.0' },
-    { name: 'Swig', value: 'swig', extension: 'swig', version: '^1.4.2'},
     { name: 'None of the above', value: null }
 ];
 
@@ -29,9 +29,7 @@ const testingFrameworks = [
         gen.fs.copyTpl(
             gen.templatePath('tests/buster/buster.js'),
             gen.destinationPath('tests/buster.js'),
-            { 
-                name: gen.options.name
-            }
+            gen.options
         );
         gen.directory('tests/buster/tests', 'tests');
     }},
@@ -75,7 +73,7 @@ module.exports = generators.Base.extend({
         let prompts = [
             {
                 type: 'input',
-                name: 'name',
+                name: 'appname',
                 message: 'Enter a name for your app:',
                 default: this.appname
             },
@@ -141,7 +139,7 @@ module.exports = generators.Base.extend({
     writing: function()  {
         
         var pkg = {
-            name: this.options.name,
+            name: this.options.appname,
             version: '0.0.1',
             main: 'boot.js',
             scripts: {

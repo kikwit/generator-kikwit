@@ -1,0 +1,16 @@
+html
+    head
+    body
+        div(class="entry")
+            h1 Food bank
+            div(class="body")
+                table
+                    thead
+                        tr
+                        th Type
+                        th Name
+                    tbody
+                        each item in items
+                            td= item.type
+                            td= item.name
+                

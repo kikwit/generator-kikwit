@@ -1,11 +1,8 @@
 'use strict';
-
 <% if (viewEngine) { %>
 import consolidate from 'consolidate';
 <% } %>
-
 import { httpServer } from 'kikwit';
-
 <% if (viewEngine) { %>
 const settings = {
   views: {
