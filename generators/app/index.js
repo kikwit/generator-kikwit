@@ -1,4 +1,5 @@
 'use strict';
+
 var fs = require('fs');
 var path = require('path');
 
@@ -9,11 +10,12 @@ var yosay = require('yosay');
 const consolidateVersion = '^0.13.1';
 
 const viewEngines = [
-    { name: 'EJS', value: 'ejs', extension: 'ejs', version: '^2.3.4' },
-    { name: 'Handlebars', value: 'handlebars', extension: 'hbs', version: '^4.0.5' },
-    { name: 'Jade', value: 'jade', extension: 'jade', version: '^1.11.0' },
-    { name: 'Mustache', value: 'mustache', extension: 'mustache', version: '^2.2.1'},
-    { name: 'Nunjucks', value: 'nunjucks', extension: 'html', version: '^2.3.0' },
+    { name: 'DustJS-LinkedIn', value: 'dustjs-linkedin', extension: 'dust', consolidateKey: 'dust', version: '^2.7.2' },
+    { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.3.4' },
+    { name: 'Handlebars', value: 'handlebars', extension: 'hbs', consolidateKey: 'handlebars', version: '^4.0.5' },
+    { name: 'Jade', value: 'jade', extension: 'jade', consolidateKey: 'jade', version: '^1.11.0' },
+    { name: 'Mustache', value: 'mustache', extension: 'mustache', consolidateKey: 'mustache', version: '^2.2.1'},
+    { name: 'Nunjucks', value: 'nunjucks', extension: 'html', consolidateKey: 'nunjucks', version: '^2.3.0' },
     { name: 'None of the above', value: null }
 ];
 
@@ -73,7 +75,7 @@ module.exports = generators.Base.extend({
         let prompts = [
             {
                 type: 'input',
-                name: 'appname',
+                name: 'appName',
                 message: 'Enter a name for your app:',
                 default: this.appname
             },
@@ -139,7 +141,7 @@ module.exports = generators.Base.extend({
     writing: function()  {
         
         var pkg = {
-            name: this.options.appname,
+            name: this.options.appName,
             version: '0.0.1',
             main: 'boot.js',
             scripts: {
