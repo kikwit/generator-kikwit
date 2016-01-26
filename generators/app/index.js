@@ -226,8 +226,10 @@ module.exports = generators.Base.extend({
     
     install: function() {
 
-        this.log(`\r\nRunning ${chalk.yellow.bold('npm install')} to install dependencies. If it fails please try running it yourself.\r\n`);
-        this.npmInstall();
+        if (!this.skipDependencyInstall) {
+            this.log(`\r\nRunning ${chalk.yellow.bold('npm install')} to install dependencies. If it fails please try running it yourself.\r\n`);
+            this.npmInstall();   
+        }
     }
     
 });
