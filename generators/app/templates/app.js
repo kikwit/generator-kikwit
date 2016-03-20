@@ -1,5 +1,5 @@
 'use strict';
-<% if (viewEngine) { %>
+<% if (viewEngine && viewEngine.consolidateKey) { %>
 import consolidate from 'consolidate';
 <% } -%>
 import { httpServer } from 'kikwit';
@@ -8,10 +8,17 @@ const settings = {
   views: {
     defaultEngine: '<%= viewEngine.extension %>',
     engines: {
-      <%= viewEngine.extension %>: consolidate['<%= viewEngine.consolidateKey %>']
+      <%= viewEngine.extension %>: <% if (viewEngine.consolidateKey) { -%>
+consolidate['<%= viewEngine.consolidateKey %>']
+<% } else if (viewEngine.renderFunction) { -%>
+<%= viewEngine.renderFunction.name %>()
+<% } -%>
     }
   }
 }
 <% } %>
 httpServer.start(null, settings); 
 
+<% if (viewEngine.renderFunction) { -%>
+<%- viewEngine.renderFunction.toString() %>
+<% } -%>

@@ -14,6 +14,7 @@ const viewEngines = [
     { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.3.4' },
     { name: 'Handlebars', value: 'handlebars', extension: 'hbs', consolidateKey: 'handlebars', version: '^4.0.5' },
     { name: 'Jade', value: 'jade', extension: 'jade', consolidateKey: 'jade', version: '^1.11.0' },
+    { name: 'Marko', value: 'marko', extension: 'marko', renderFunction: markoRenderFunction, version: '^3.0.3'},
     { name: 'Mustache', value: 'mustache', extension: 'mustache', consolidateKey: 'mustache', version: '^2.2.1'},
     { name: 'Nunjucks', value: 'nunjucks', extension: 'html', consolidateKey: 'nunjucks', version: '^2.3.0' },
     { name: 'None of the above', value: null }
@@ -145,7 +146,7 @@ module.exports = generators.Base.extend({
             version: '0.0.1',
             main: 'boot.js',
             scripts: {
-                start: 'nodemon --ignore public/ --ignore tests/ ./boot.js',
+                start: 'nodemon --ignore public/ --ignore tests/ --ignore views/ ./boot.js',
                 test: 'echo "Error: no test specified" && exit 1'
             },
             dependencies: dependencies,
@@ -159,7 +160,10 @@ module.exports = generators.Base.extend({
             this.options.viewEngine = viewEngine;
             
             pkg.dependencies[viewEngine.value] = viewEngine.version;
-            pkg.dependencies.consolidate = consolidateVersion;
+            
+            if (viewEngine.consolidateKey) {
+                pkg.dependencies.consolidate = consolidateVersion;                
+            }
         }
         
         if (this.options.testingFramework) {
@@ -233,6 +237,18 @@ module.exports = generators.Base.extend({
     }
     
 });
+
+function markoRenderFunction() {
+
+    const marko = require('marko');
+    
+    return function (filePath, options, callback) {
+
+        var template = marko.load(filePath, {writeToDisk: true});
+        
+        return template.render(options, callback);
+    }
+}
 
 
 
