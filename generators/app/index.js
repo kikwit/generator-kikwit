@@ -7,7 +7,7 @@ var generators = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 
-const consolidateVersion = '^0.13.1';
+const consolidateVersion = '^0.14.0';
 
 const viewEngines = [
     { name: 'DustJS-LinkedIn', value: 'dustjs-linkedin', extension: 'dust', consolidateKey: 'dust', version: '^2.7.2' },
@@ -17,6 +17,7 @@ const viewEngines = [
     { name: 'Marko', value: 'marko', extension: 'marko', renderFunction: markoRenderFunction, version: '^3.0.3'},
     { name: 'Mustache', value: 'mustache', extension: 'mustache', consolidateKey: 'mustache', version: '^2.2.1'},
     { name: 'Nunjucks', value: 'nunjucks', extension: 'html', consolidateKey: 'nunjucks', version: '^2.3.0' },
+    { name: 'Vash', value: 'vash', extension: 'vash', consolidateKey: 'vash', version: '^0.11.2' },
     { name: 'None of the above', value: null }
 ];
 
@@ -134,6 +135,11 @@ module.exports = generators.Base.extend({
         this.prompt(prompts, (answers) => {
 
             this.options = answers;
+            
+            if (!this.options.addViewEngine) {
+                this.options.viewEngine = undefined;
+            }
+            
             done();
         });
             
@@ -209,6 +215,20 @@ module.exports = generators.Base.extend({
             this.templatePath('.babelrc'),
             this.destinationPath('.babelrc')
         );
+        
+        fs.mkdirSync(this.destinationPath('config'));
+        
+        this.fs.copyTpl(
+            this.templatePath('config/default.js'),
+            this.destinationPath('config/default.js'),
+            this.options
+        );
+        
+        this.fs.copyTpl(
+            this.templatePath('config/production.js'),
+            this.destinationPath('config/production.js'),
+            this.options
+        );
 
         fs.mkdirSync(this.destinationPath('controllers'));
         
@@ -224,7 +244,7 @@ module.exports = generators.Base.extend({
         
         if (this.options.viewEngine) {
             fs.mkdirSync(this.destinationPath('views'));
-            this.directory(`views/${this.options.viewEngine.value}/Products`, 'views/Products')
+            this.directory(`views/${this.options.viewEngine.value}/Products`, 'views/Products');
         }
     },
     

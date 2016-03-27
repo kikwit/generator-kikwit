@@ -22,7 +22,6 @@ export default class Products {
             <% } else { %>
         ctx.send(model);
             <% } %>
-        <% } %>
+<% } -%>
     }
-
 }
