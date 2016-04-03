@@ -1,5 +1,11 @@
 'use strict';
 
-import { httpServer } from 'kikwit';
+import { Server } from 'kikwit';
  
-httpServer.start(); 
+const server = new Server();
+
+server.start().then(() => {
+    console.log(`Online, PID: ${process.pid}`);
+});
+
+

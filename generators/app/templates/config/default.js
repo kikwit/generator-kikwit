@@ -4,20 +4,21 @@ import consolidate from 'consolidate';
 <% } %>
 export default () => ({
     
+    cluster: false,
     server: {
         port: 3000
     },
     <% if (viewEngine) { -%>
 views: {
-    cache: false,
-    defaultEngine: '<%= viewEngine.extension %>',
-    engines: {
-        <%= viewEngine.extension %>: <% if (viewEngine.consolidateKey) { -%>
+        cache: false,
+        defaultEngine: '<%= viewEngine.extension %>',
+        engines: {
+            <%= viewEngine.extension %>: <% if (viewEngine.consolidateKey) { -%>
 consolidate['<%= viewEngine.consolidateKey %>']
-<% } else if (viewEngine.renderFunction) { -%>
+    <% } else if (viewEngine.renderFunction) { -%>
 <%= viewEngine.renderFunction.name %>()
-<% } -%>
-        }
+    <% } -%>
+    }
     }
     <% } %>
 });
