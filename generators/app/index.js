@@ -17,7 +17,14 @@ const viewEngines = [
     { name: 'Marko', value: 'marko', extension: 'marko', renderFunction: markoRenderFunction, version: '^3.0.3'},
     { name: 'Mustache', value: 'mustache', extension: 'mustache', consolidateKey: 'mustache', version: '^2.2.1'},
     { name: 'Nunjucks', value: 'nunjucks', extension: 'html', consolidateKey: 'nunjucks', version: '^2.3.0' },
-    { name: 'Vash', value: 'vash', extension: 'vash', consolidateKey: 'vash', version: '^0.11.2' },
+    { name: 'Vash', value: 'vash', extension: 'vash', consolidateKey: 'vash', version: '^0.11.3' },
+    { name: 'None of the above', value: null }
+];
+
+const loggers = [
+    { name: 'Bunyan', value: 'bunyan', logFunction: 'getBunyanLogFunction', version: '^1.8.0' },
+    { name: 'Log4JS', value: 'log4js', logFunction: 'getLog4JSLogFunction', version: '^0.6.33' },
+    { name: 'Winston', value: 'winston', logFunction: 'getWinstonLogFunction', version: '^2.2.0' },
     { name: 'None of the above', value: null }
 ];
 
@@ -47,7 +54,7 @@ const assertionLibraries = [
 ];
 
 const dependencies = {
-    'babel-core': '^6.3.26',
+    'babel-core': '^6.7.6',
     'babel-plugin-transform-decorators-legacy': '^1.3.4',
     'babel-plugin-transform-es2015-destructuring': '^6.3.15',
     'babel-plugin-transform-es2015-modules-commonjs': '^6.3.16',
@@ -92,22 +99,19 @@ module.exports = generators.Base.extend({
                 default: 'website'
             },
             {
-                type: 'confirm',
-                name: 'addViewEngine',
-                message: 'Would you like to add a view engine?',
-                default: true,
+                type: 'list',
+                name: 'viewEngine',
+                message: 'Select a view engine',
+                choices: viewEngines,
                 when: function (answers) {
                     return answers.appType == 'website';
                 }
             },
             {
                 type: 'list',
-                name: 'viewEngine',
-                message: 'Select a view engine',
-                choices: viewEngines,
-                when: function (answers) {
-                    return answers.addViewEngine;
-                }
+                name: 'logger',
+                message: 'Select a logger',
+                choices: loggers
             },
             {
                 type: 'list',
@@ -136,8 +140,8 @@ module.exports = generators.Base.extend({
 
             this.options = answers;
             
-            if (!this.options.addViewEngine) {
-                this.options.viewEngine = undefined;
+            if (this.options.appType == 'api') {
+                this.options.viewEngine = null;
             }
             
             done();
@@ -172,6 +176,15 @@ module.exports = generators.Base.extend({
             }
         }
         
+        if (this.options.logger) {
+            
+            let logger = loggers.find(x => x.value == this.options.logger);
+            
+            this.options.logger = logger;
+            
+            pkg.dependencies[logger.value] = logger.version;
+        }
+                
         if (this.options.testingFramework) {
             
             let testingFramework = testingFrameworks.find(x => x.value == this.options.testingFramework);
@@ -269,8 +282,4 @@ function markoRenderFunction() {
         return template.render(options, callback);
     }
 }
-
-
-
-
 
