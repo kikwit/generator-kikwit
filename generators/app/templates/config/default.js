@@ -41,7 +41,7 @@ function getLogger() {
         name: '<%= appName %>',
         streams: [
             {
-                stream: process.stderr,
+                stream: process.stdout,
                 level: 'debug'
             }
         ]
@@ -61,8 +61,6 @@ function getLogger() {
         ]
     });        
     <% } %>             
-    return (severity, ...args) => {
-        logger[severity](...args);
-    }      
+    return logger;
 }
 <% } -%>
