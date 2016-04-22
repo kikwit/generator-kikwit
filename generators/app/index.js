@@ -155,6 +155,9 @@ module.exports = generators.Base.extend({
             name: this.options.appName,
             version: '0.0.1',
             main: 'boot.js',
+            engines: {
+                node: "6.0.0-rc.4"
+            },
             scripts: {
                 start: 'nodemon --ignore public/ --ignore tests/ --ignore views/ ./boot.js',
                 test: 'echo "Error: no test specified" && exit 1'
