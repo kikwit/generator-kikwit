@@ -54,18 +54,14 @@ const assertionLibraries = [
 ];
 
 const dependencies = {
-    'babel-core': '^6.7.6',
+    'babel-core': '^6.7.7',
     'babel-plugin-transform-decorators-legacy': '^1.3.4',
-    'babel-plugin-transform-es2015-destructuring': '^6.3.15',
-    'babel-plugin-transform-es2015-modules-commonjs': '^6.3.16',
-    'babel-plugin-transform-es2015-parameters': '^6.3.26',
-    'babel-plugin-transform-es2015-sticky-regex': '^6.3.13',
-    'babel-plugin-transform-es2015-unicode-regex': '^6.3.13',
-    'babel-plugin-transform-strict-mode': '^6.3.13'
+    'babel-plugin-transform-es2015-modules-commonjs': '^6.7.7',
+    'kikwit': '*'
 };
 
 const autoRestartOnChangeDependency = {
-    value: 'nodemon', version: '^1.8.1'   
+    value: 'nodemon', version: '^1.9.1'   
 };
 
 module.exports = generators.Base.extend({
