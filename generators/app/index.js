@@ -146,7 +146,7 @@ module.exports = generators.Base.extend({
     },
 
     writing: function()  {
-        
+       
         var pkg = {
             name: this.options.appName,
             version: '0.0.1',
@@ -174,7 +174,7 @@ module.exports = generators.Base.extend({
                 pkg.dependencies.consolidate = consolidateVersion;                
             }
         }
-        
+       
         if (this.options.logger) {
             
             let logger = loggers.find(x => x.value == this.options.logger);

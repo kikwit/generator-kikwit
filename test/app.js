@@ -7,7 +7,7 @@ describe('generator-kikwit:app', () => {
     
     let destinationPath;
     
-    it('creates website files: viewEngine, mocha, chai, autoRestart', (done) => {
+    it('creates website files: viewEngine, mocha, chai, autoRestart', done => {
                  
         helpers.run(path.join(__dirname, '../generators/app'))
             .withPrompts({
@@ -20,11 +20,12 @@ describe('generator-kikwit:app', () => {
                 skipDependencyInstall: true
             })
             .on('ready', gen => {
+ 
                 destinationPath = gen.options.env.cwd;
                 gen.skipDependencyInstall = true;
             })
             .on('end', () => {
-                
+            
                 assert.file(
                     resolveFilePaths(
                         'package.json',
@@ -32,17 +33,17 @@ describe('generator-kikwit:app', () => {
                         'boot.js',
                         '.babelrc'
                 ));
-                
+                   
                 assert.fileContent([
                     [resolveFilePath('app.js'), "import consolidate from 'consolidate';"]
                 ]);
-                
+                   
                 done();
             });          
     });
         
     it('creates website files: dustjs-linkedin', (done) => {
-                 
+               
         helpers.run(path.join(__dirname, '../generators/app'))
             .withPrompts({
                 appName: 'test-app',
