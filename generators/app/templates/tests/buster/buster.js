@@ -4,6 +4,6 @@ config["<%= appName %> Tests"] = {
     environment: "node",
     rootPath: "../",
     tests: [
-        "tests/**/*.js"
+        "test/**/*.js"
     ]
 }

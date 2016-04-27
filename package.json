@@ -1,6 +1,6 @@
 {
   "name": "generator-kikwit",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "yeoman-generator",
   "homepage": "https://github.com/kikwit/generator-kikwit#readme",
   "author": {
@@ -8,7 +8,7 @@
     "email": "mbonze.elondo@gmail.com"
   },
   "engines": {
-    "node": "6.0.0"
+    "node": "^6.0.0"
   },
   "files": [
     "generators"
