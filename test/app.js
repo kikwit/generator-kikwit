@@ -66,13 +66,13 @@ describe('generator-kikwit:app', (done) => {
                 .on('end', () => {
                     
                     assert.file(
-                        resolveFilePath('views/Products/list.dust')
+                        resolveFilePath('views/Home/index.dust')
                     );
                     
                     assert.fileContent([
                         [resolveFilePath('app.js'), "defaultEngine: 'dust'"],
                         [resolveFilePath('app.js'), "dust: consolidate['dust']"],
-                        [resolveFilePath('views/Products/list.dust'), '{! dustjs-linkedin file !}']
+                        [resolveFilePath('views/Home/index.dust'), '{! dustjs-linkedin file !}']
                     ]);
                 });          
         });
@@ -101,13 +101,13 @@ describe('generator-kikwit:app', (done) => {
                 .on('end', () => {
                     
                     assert.file(
-                        resolveFilePaths('views/Products/list.ejs')
+                        resolveFilePaths('views/Home/index.ejs')
                     );
                     
                     assert.fileContent([
                         [resolveFilePath('app.js'), "defaultEngine: 'ejs'"],
                         [resolveFilePath('app.js'), "ejs: consolidate['ejs']"],
-                        [resolveFilePath('views/Products/list.ejs'), '<%# ejs file %>']
+                        [resolveFilePath('views/Home/index.ejs'), '<%# ejs file %>']
                     ]);
                 });          
         });
@@ -136,13 +136,13 @@ describe('generator-kikwit:app', (done) => {
                 .on('end', () => {
                     
                     assert.file(
-                        resolveFilePaths('views/Products/list.hbs')
+                        resolveFilePaths('views/Home/index.hbs')
                     );
                     
                     assert.fileContent([
                         [resolveFilePath('app.js'), "defaultEngine: 'hbs'"],
                         [resolveFilePath('app.js'), "hbs: consolidate['handlebars']"],
-                        [resolveFilePath('views/Products/list.hbs'), '{{!-- handlebars file --}}']
+                        [resolveFilePath('views/Home/index.hbs'), '{{!-- handlebars file --}}']
                     ]);
                 });          
         });
@@ -171,13 +171,13 @@ describe('generator-kikwit:app', (done) => {
                 .on('end', () => {
                     
                     assert.file(
-                        resolveFilePaths('views/Products/list.jade')
+                        resolveFilePaths('views/Home/index.jade')
                     );
                     
                     assert.fileContent([
                         [resolveFilePath('app.js'), "defaultEngine: 'jade'"],
                         [resolveFilePath('app.js'), "jade: consolidate['jade']"],
-                        [resolveFilePath('views/Products/list.jade'), '//- Jade file']
+                        [resolveFilePath('views/Home/index.jade'), '//- Jade file']
                     ]);
                 });          
         });
@@ -206,13 +206,13 @@ describe('generator-kikwit:app', (done) => {
                 .on('end', () => {
                     
                     assert.file(
-                        resolveFilePaths('views/Products/list.mustache')
+                        resolveFilePaths('views/Home/index.mustache')
                     );
                     
                     assert.fileContent([
                         [resolveFilePath('app.js'), "defaultEngine: 'mustache'"],
                         [resolveFilePath('app.js'), "mustache: consolidate['mustache']"],
-                        [resolveFilePath('views/Products/list.mustache'), '{{! mustache file }}']
+                        [resolveFilePath('views/Home/index.mustache'), '{{! mustache file }}']
                     ]);
                 });          
         });
@@ -241,13 +241,13 @@ describe('generator-kikwit:app', (done) => {
                 .on('end', () => {
                     
                     assert.file(
-                        resolveFilePaths('views/Products/list.html')
+                        resolveFilePaths('views/Home/index.html')
                     );
                     
                     assert.fileContent([
                         [resolveFilePath('app.js'), "defaultEngine: 'html'"],
                         [resolveFilePath('app.js'), "html: consolidate['nunjucks']"],
-                        [resolveFilePath('views/Products/list.html'), '{# nunjucks file #}']
+                        [resolveFilePath('views/Home/index.html'), '{# nunjucks file #}']
                     ]);
                 });          
         });
@@ -277,13 +277,13 @@ describe('generator-kikwit:app', (done) => {
                 .on('end', () => {
            
                     assert.file(
-                        resolveFilePaths('views/Products/list.vash')
+                        resolveFilePaths('views/Home/index.vash')
                     );
                     
                     assert.fileContent([
                         [resolveFilePath('app.js'), "defaultEngine: 'vash'"],
                         [resolveFilePath('app.js'), "vash: consolidate['vash']"],
-                        [resolveFilePath('views/Products/list.vash'), '@* vash file *@']
+                        [resolveFilePath('views/Home/index.vash'), '@* vash file *@']
                     ]);
                 });          
         });

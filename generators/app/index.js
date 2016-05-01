@@ -245,8 +245,8 @@ module.exports = generators.Base.extend({
         fs.mkdirSync(this.destinationPath('controllers'));
         
         this.fs.copyTpl(
-            this.templatePath('controllers/products.js'),
-            this.destinationPath('controllers/products.js'),
+            this.templatePath('controllers/home.js'),
+            this.destinationPath('controllers/home.js'),
             this.options
         );
 
@@ -256,7 +256,7 @@ module.exports = generators.Base.extend({
         
         if (this.options.viewEngine) {
             fs.mkdirSync(this.destinationPath('views'));
-            this.directory(`views/${this.options.viewEngine.value}/Products`, 'views/Products');
+            this.directory(`views/${this.options.viewEngine.value}/Home`, 'views/Home');
         }
     },
     

@@ -1,0 +1,8 @@
+<html>
+	<head>
+	</head>
+	<body>
+    {! dustjs-linkedin file !}
+    {message}
+	</body>
+</html>
