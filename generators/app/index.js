@@ -152,7 +152,7 @@ module.exports = generators.Base.extend({
             version: '0.0.1',
             main: 'boot.js',
             engines: {
-                node: "6.0.0-rc.4"
+                node: "^6.0.0"
             },
             scripts: {
                 start: 'nodemon --ignore public/ --ignore test/ --ignore views/ ./boot.js',
