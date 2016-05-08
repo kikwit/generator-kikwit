@@ -148,7 +148,7 @@ describe('generator-kikwit:app', (done) => {
         });
     });
 
-    describe('jade', () => {
+    describe('pug', () => {
         
         let destinationPath;
                 
@@ -159,7 +159,7 @@ describe('generator-kikwit:app', (done) => {
                     appName: 'test-app',
                     appType: 'website',
                     testingFramework: 'mocha',
-                    viewEngine: 'jade',
+                    viewEngine: 'pug',
                     assertionLibrary: 'chai',
                     autoRestartOnChange: true,
                     skipDependencyInstall: true
@@ -171,13 +171,13 @@ describe('generator-kikwit:app', (done) => {
                 .on('end', () => {
                     
                     assert.file(
-                        resolveFilePaths('views/Home/index.jade')
+                        resolveFilePaths('views/Home/index.pug')
                     );
                     
                     assert.fileContent([
-                        [resolveFilePath('app.js'), "defaultEngine: 'jade'"],
-                        [resolveFilePath('app.js'), "jade: consolidate['jade']"],
-                        [resolveFilePath('views/Home/index.jade'), '//- Jade file']
+                        [resolveFilePath('app.js'), "defaultEngine: 'pug'"],
+                        [resolveFilePath('app.js'), "pug: consolidate['pug']"],
+                        [resolveFilePath('views/Home/index.pug'), '//- Pug file']
                     ]);
                 });          
         });

@@ -7,23 +7,23 @@ var generators = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 
-const consolidateVersion = '^0.14.0';
+const consolidateVersion = '^0.14.1';
 
 const viewEngines = [
     { name: 'DustJS-LinkedIn', value: 'dustjs-linkedin', extension: 'dust', consolidateKey: 'dust', version: '^2.7.2' },
-    { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.3.4' },
+    { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.4.1' },
     { name: 'Handlebars', value: 'handlebars', extension: 'hbs', consolidateKey: 'handlebars', version: '^4.0.5' },
-    { name: 'Jade', value: 'jade', extension: 'jade', consolidateKey: 'jade', version: '^1.11.0' },
-    { name: 'Marko', value: 'marko', extension: 'marko', renderFunction: markoRenderFunction, version: '^3.0.3'},
+    { name: 'Pug', value: 'pug', extension: 'pug', consolidateKey: 'pug', version: '^2.0.0-alpha6' },
+    { name: 'Marko', value: 'marko', extension: 'marko', renderFunction: markoRenderFunction, version: '^3.2.0'},
     { name: 'Mustache', value: 'mustache', extension: 'mustache', consolidateKey: 'mustache', version: '^2.2.1'},
-    { name: 'Nunjucks', value: 'nunjucks', extension: 'html', consolidateKey: 'nunjucks', version: '^2.3.0' },
+    { name: 'Nunjucks', value: 'nunjucks', extension: 'html', consolidateKey: 'nunjucks', version: '^2.4.2' },
     { name: 'Vash', value: 'vash', extension: 'vash', consolidateKey: 'vash', version: '^0.11.3' },
     { name: 'None of the above', value: null }
 ];
 
 const loggers = [
-    { name: 'Bunyan', value: 'bunyan', logFunction: 'getBunyanLogFunction', version: '^1.8.0' },
-    { name: 'Log4JS', value: 'log4js', logFunction: 'getLog4JSLogFunction', version: '^0.6.33' },
+    { name: 'Bunyan', value: 'bunyan', logFunction: 'getBunyanLogFunction', version: '^1.8.1' },
+    { name: 'Log4JS', value: 'log4js', logFunction: 'getLog4JSLogFunction', version: '^0.6.36' },
     { name: 'Winston', value: 'winston', logFunction: 'getWinstonLogFunction', version: '^2.2.0' },
     { name: 'None of the above', value: null }
 ];
@@ -32,7 +32,7 @@ const testingFrameworks = [
     { name: 'Jasmine', value: 'jasmine', version: '^2.4.1', npmScript: 'jasmine JASMINE_CONFIG_PATH=test/support/jasmine.json', copyFiles: (gen) => {
         gen.directory('tests/jasmin/test', 'test');
     }},
-    { name: 'Mocha', value: 'mocha', version: '^2.3.4', npmScript: 'mocha --compilers js:babel-core/register test/**/*.js', copyFiles: (gen) => {
+    { name: 'Mocha', value: 'mocha', version: '^2.4.5', npmScript: 'mocha --compilers js:babel-core/register test/**/*.js', copyFiles: (gen) => {
         gen.directory('tests/mocha/test', 'test');
     }},
     { name: 'Buster.js', value: 'buster', version:'^0.8.0', npmScript: 'buster-test --config tests/buster.js', copyFiles: (gen) => {
@@ -48,20 +48,20 @@ const testingFrameworks = [
 ];
 
 const assertionLibraries = [
-    { name: 'Chai', value: 'chai', version: '^3.4.1' },
-    { name: 'Should.js', value: 'should', version: '^8.0.2' },
+    { name: 'Chai', value: 'chai', version: '^3.5.0' },
+    { name: 'Should.js', value: 'should', version: '^8.3.1' },
     { name: 'None of the above', value: null }
 ];
 
 const dependencies = {
-    'babel-core': '^6.7.7',
+    'babel-core': '^6.8.0',
     'babel-plugin-transform-decorators-legacy': '^1.3.4',
-    'babel-plugin-transform-es2015-modules-commonjs': '^6.7.7',
+    'babel-plugin-transform-es2015-modules-commonjs': '^6.8.0',
     'kikwit': '^0.1.0'
 };
 
 const autoRestartOnChangeDependency = {
-    value: 'nodemon', version: '^1.9.1'   
+    value: 'nodemon', version: '^1.9.2'   
 };
 
 module.exports = generators.Base.extend({
