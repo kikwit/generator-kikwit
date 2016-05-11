@@ -3,9 +3,9 @@ var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
-describe('generator-kikwit:app', (done) => {
+describe('generator-kikwit:app', () => {
     
-    describe('viewEngine, mocha, chai, autoRestart', () => {
+    describe('viewEngine, mocha, chai, autoRestart', (done) => {
         
         let destinationPath;
         
@@ -39,6 +39,7 @@ describe('generator-kikwit:app', (done) => {
                     assert.fileContent([
                         [resolveFilePath('app.js'), "import consolidate from 'consolidate';"]
                     ]);
+
                 });          
         });
     });
@@ -74,7 +75,8 @@ describe('generator-kikwit:app', (done) => {
                         [resolveFilePath('app.js'), "dust: consolidate['dust']"],
                         [resolveFilePath('views/Home/index.dust'), '{! dustjs-linkedin file !}']
                     ]);
-                });          
+                }); 
+
         });
     });
 
@@ -109,7 +111,8 @@ describe('generator-kikwit:app', (done) => {
                         [resolveFilePath('app.js'), "ejs: consolidate['ejs']"],
                         [resolveFilePath('views/Home/index.ejs'), '<%# ejs file %>']
                     ]);
-                });          
+                });  
+               
         });
     });
 
@@ -144,7 +147,8 @@ describe('generator-kikwit:app', (done) => {
                         [resolveFilePath('app.js'), "hbs: consolidate['handlebars']"],
                         [resolveFilePath('views/Home/index.hbs'), '{{!-- handlebars file --}}']
                     ]);
-                });          
+                });
+                                 
         });
     });
 
@@ -179,7 +183,8 @@ describe('generator-kikwit:app', (done) => {
                         [resolveFilePath('app.js'), "pug: consolidate['pug']"],
                         [resolveFilePath('views/Home/index.pug'), '//- Pug file']
                     ]);
-                });          
+                });
+                                        
         });
     });
 
@@ -215,6 +220,7 @@ describe('generator-kikwit:app', (done) => {
                         [resolveFilePath('views/Home/index.mustache'), '{{! mustache file }}']
                     ]);
                 });          
+                                
         });
     });
 
@@ -249,7 +255,8 @@ describe('generator-kikwit:app', (done) => {
                         [resolveFilePath('app.js'), "html: consolidate['nunjucks']"],
                         [resolveFilePath('views/Home/index.html'), '{# nunjucks file #}']
                     ]);
-                });          
+                }); 
+                                         
         });
     });
 
@@ -285,10 +292,9 @@ describe('generator-kikwit:app', (done) => {
                         [resolveFilePath('app.js'), "vash: consolidate['vash']"],
                         [resolveFilePath('views/Home/index.vash'), '@* vash file *@']
                     ]);
-                });          
+                });                
         });
         
-        done();
     });
                 
     function resolveFilePaths(...filePaths) {

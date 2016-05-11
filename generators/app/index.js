@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require('fs');
+var os = require('os');
 var path = require('path');
 
 var generators = require('yeoman-generator');
@@ -132,7 +133,7 @@ module.exports = generators.Base.extend({
             },
         ];
 
-        this.prompt(prompts, (answers) => {
+        this.prompt(prompts).then(answers => {
 
             this.options = answers;
             
@@ -146,16 +147,16 @@ module.exports = generators.Base.extend({
     },
 
     writing: function()  {
-       
+    
         var pkg = {
             name: this.options.appName,
-            version: '0.0.1',
+            version: '0.1.0',
             main: 'boot.js',
             engines: {
                 node: "^6.0.0"
             },
             scripts: {
-                start: 'nodemon --ignore public/ --ignore test/ --ignore views/ ./boot.js',
+                start: 'npm run dev',
                 test: 'echo "Error: no test specified" && exit 1'
             },
             dependencies: dependencies,
@@ -183,16 +184,19 @@ module.exports = generators.Base.extend({
             
             pkg.dependencies[logger.value] = logger.version;
         }
-                
+              
         if (this.options.testingFramework) {
             
             let testingFramework = testingFrameworks.find(x => x.value == this.options.testingFramework);
             
-            pkg.devDependencies[testingFramework.value] = testingFramework.version;
-            pkg.scripts.test = testingFramework.npmScript;
-            
-            if (testingFramework.copyFiles) {
-                testingFramework.copyFiles(this);      
+            if (testingFramework) {
+             
+                pkg.devDependencies[testingFramework.value] = testingFramework.version;
+                pkg.scripts.test = testingFramework.npmScript;
+                
+                if (testingFramework.copyFiles) {
+                    testingFramework.copyFiles(this);      
+                }                
             }
         }
         
@@ -203,10 +207,29 @@ module.exports = generators.Base.extend({
             pkg.devDependencies[assertionLibrary.value] = assertionLibrary.version;
         }
         
+        let setEnv;
+        
+        if (os.platform() == 'win32') {
+            setEnv = 'SET ';
+        } else {
+            setEnv = '';
+        }
+        
+        let devStartCMD;
+                
         if (this.options.autoRestartOnChange) {
 
+            devStartCMD = `${setEnv}NODE_ENV=development nodemon --ignore public/ --ignore test/ --ignore views/ ./boot.js`,
+            
             pkg.devDependencies[autoRestartOnChangeDependency.value] = autoRestartOnChangeDependency.version;
+            
+        } else {
+            
+            devStartCMD = `${setEnv}NODE_ENV=development node boot.js`; 
         }
+        
+        pkg.scripts['dev'] = devStartCMD; 
+        pkg.scripts['prod'] = `${setEnv}NODE_ENV=production node boot.js`;        
         
         this.log('\r\n');
 
