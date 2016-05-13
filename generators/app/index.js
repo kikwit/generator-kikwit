@@ -156,7 +156,7 @@ module.exports = generators.Base.extend({
                 node: "^6.0.0"
             },
             scripts: {
-                start: 'npm run dev',
+                start: 'npm run -s development',
                 test: 'echo "Error: no test specified" && exit 1'
             },
             dependencies: dependencies,
@@ -228,8 +228,8 @@ module.exports = generators.Base.extend({
             setEnv = '';
         }        
         
-        pkg.scripts['dev'] = devStartCMD; 
-        pkg.scripts['prod'] = `${setEnv}NODE_ENV=production node boot.js`;        
+        pkg.scripts['development'] = devStartCMD; 
+        pkg.scripts['production'] = `${setEnv}NODE_ENV=production node boot.js`;        
         
         this.log('\r\n');
 
