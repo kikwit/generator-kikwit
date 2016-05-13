@@ -207,26 +207,26 @@ module.exports = generators.Base.extend({
             pkg.devDependencies[assertionLibrary.value] = assertionLibrary.version;
         }
         
+        let devStartCMD;
+                
+        if (this.options.autoRestartOnChange) {
+
+            devStartCMD = 'nodemon --ignore public/ --ignore test/ --ignore views/ ./boot.js',
+            
+            pkg.devDependencies[autoRestartOnChangeDependency.value] = autoRestartOnChangeDependency.version;
+            
+        } else {
+            
+            devStartCMD = 'node boot.js'; 
+        }
+        
         let setEnv;
         
         if (os.platform() == 'win32') {
             setEnv = 'SET ';
         } else {
             setEnv = '';
-        }
-        
-        let devStartCMD;
-                
-        if (this.options.autoRestartOnChange) {
-
-            devStartCMD = `${setEnv}NODE_ENV=development nodemon --ignore public/ --ignore test/ --ignore views/ ./boot.js`,
-            
-            pkg.devDependencies[autoRestartOnChangeDependency.value] = autoRestartOnChangeDependency.version;
-            
-        } else {
-            
-            devStartCMD = `${setEnv}NODE_ENV=development node boot.js`; 
-        }
+        }        
         
         pkg.scripts['dev'] = devStartCMD; 
         pkg.scripts['prod'] = `${setEnv}NODE_ENV=production node boot.js`;        
