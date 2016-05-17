@@ -11,7 +11,10 @@ export default () => ({
     cluster: false,
     <% if (logger) { -%>
 logger: getLogger(),
-<% } -%>
+<% } %>
+    route: {
+        overview: true  
+    },
     server: {
         port: 3000
     },
