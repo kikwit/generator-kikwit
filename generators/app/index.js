@@ -12,10 +12,10 @@ const consolidateVersion = '^0.14.1';
 
 const viewEngines = [
     { name: 'DustJS-LinkedIn', value: 'dustjs-linkedin', extension: 'dust', consolidateKey: 'dust', version: '^2.7.2' },
-    { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.4.1' },
+    { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.4.2' },
     { name: 'Handlebars', value: 'handlebars', extension: 'hbs', consolidateKey: 'handlebars', version: '^4.0.5' },
-    { name: 'Pug', value: 'pug', extension: 'pug', consolidateKey: 'pug', version: '^2.0.0-alpha6' },
-    { name: 'Marko', value: 'marko', extension: 'marko', renderFunction: markoRenderFunction, version: '^3.2.0'},
+    { name: 'Pug', value: 'pug', extension: 'pug', consolidateKey: 'pug', version: '^2.0.0-alpha8' },
+    { name: 'Marko', value: 'marko', extension: 'marko', renderFunction: markoRenderFunction, version: '^3.4.2'},
     { name: 'Mustache', value: 'mustache', extension: 'mustache', consolidateKey: 'mustache', version: '^2.2.1'},
     { name: 'Nunjucks', value: 'nunjucks', extension: 'html', consolidateKey: 'nunjucks', version: '^2.4.2' },
     { name: 'Vash', value: 'vash', extension: 'vash', consolidateKey: 'vash', version: '^0.11.3' },
@@ -33,10 +33,10 @@ const testingFrameworks = [
     { name: 'Jasmine', value: 'jasmine', version: '^2.4.1', npmScript: 'jasmine JASMINE_CONFIG_PATH=test/support/jasmine.json', copyFiles: (gen) => {
         gen.directory('tests/jasmin/test', 'test');
     }},
-    { name: 'Mocha', value: 'mocha', version: '^2.4.5', npmScript: 'mocha --compilers js:babel-core/register test/**/*.js', copyFiles: (gen) => {
+    { name: 'Mocha', value: 'mocha', version: '^2.5.3', npmScript: 'mocha --compilers js:babel-core/register test/**/*.js', copyFiles: (gen) => {
         gen.directory('tests/mocha/test', 'test');
     }},
-    { name: 'Buster.js', value: 'buster', version:'^0.8.0', npmScript: 'buster-test --config tests/buster.js', copyFiles: (gen) => {
+    { name: 'Buster.js', value: 'buster', version:'^0.7.18', npmScript: 'buster-test --config tests/buster.js', copyFiles: (gen) => {
 
         gen.fs.copyTpl(
             gen.templatePath('tests/buster/buster.js'),
@@ -50,15 +50,15 @@ const testingFrameworks = [
 
 const assertionLibraries = [
     { name: 'Chai', value: 'chai', version: '^3.5.0' },
-    { name: 'Should.js', value: 'should', version: '^8.3.1' },
+    { name: 'Should.js', value: 'should', version: '^8.4.0' },
     { name: 'None of the above', value: null }
 ];
 
 const dependencies = {
-    'babel-core': '^6.8.0',
+    'babel-core': '^6.9.0',
     'babel-plugin-transform-decorators-legacy': '^1.3.4',
     'babel-plugin-transform-es2015-modules-commonjs': '^6.8.0',
-    'kikwit': '^0.2.3'
+    'kikwit': '^0.2.4'
 };
 
 const autoRestartOnChangeDependency = {

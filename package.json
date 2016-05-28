@@ -1,6 +1,6 @@
 {
   "name": "generator-kikwit",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "yeoman-generator",
   "homepage": "https://github.com/kikwit/generator-kikwit#readme",
   "author": {
@@ -40,7 +40,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.8.0",
     "yeoman-test": "^1.4.0",
     "yeoman-assert": "^2.2.1",
-    "eslint": "^2.10.2",
+    "eslint": "^2.11.0",
     "eslint-config-xo-space": "^0.13.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^2.0.0",
