@@ -14,11 +14,11 @@ const viewEngines = [
     { name: 'DustJS-LinkedIn', value: 'dustjs-linkedin', extension: 'dust', consolidateKey: 'dust', version: '^2.7.2' },
     { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.4.2' },
     { name: 'Handlebars', value: 'handlebars', extension: 'hbs', consolidateKey: 'handlebars', version: '^4.0.5' },
-    { name: 'Pug', value: 'pug', extension: 'pug', consolidateKey: 'pug', version: '^2.0.0-alpha8' },
-    { name: 'Marko', value: 'marko', extension: 'marko', renderFunction: markoRenderFunction, version: '^3.4.2'},
+    { name: 'Pug', value: 'pug', extension: 'pug', consolidateKey: 'pug', version: '^2.0.0-beta2' },
+    { name: 'Marko', value: 'marko', extension: 'marko', renderFunction: markoRenderFunction, version: '^3.4.6'},
     { name: 'Mustache', value: 'mustache', extension: 'mustache', consolidateKey: 'mustache', version: '^2.2.1'},
     { name: 'Nunjucks', value: 'nunjucks', extension: 'html', consolidateKey: 'nunjucks', version: '^2.4.2' },
-    { name: 'Vash', value: 'vash', extension: 'vash', consolidateKey: 'vash', version: '^0.11.3' },
+    { name: 'Vash', value: 'vash', extension: 'vash', consolidateKey: 'vash', version: '^0.12.1' },
     { name: 'None of the above', value: null }
 ];
 
@@ -55,10 +55,10 @@ const assertionLibraries = [
 ];
 
 const dependencies = {
-    'babel-core': '^6.9.0',
+    'babel-core': '^6.9.1',
     'babel-plugin-transform-decorators-legacy': '^1.3.4',
     'babel-plugin-transform-es2015-modules-commonjs': '^6.8.0',
-    'kikwit': '^0.2.4'
+    'kikwit': '^0.2.5'
 };
 
 const autoRestartOnChangeDependency = {
