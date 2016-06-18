@@ -10,17 +10,19 @@ export default class Home {
     index(ctx) {
 
         const [a, b] = [2, 3];
-        const sum = ctx.services.adder.add(a + b); 
+        const sum = ctx.services.adder.add(a, b); 
         <% if (appType == 'api') { %> 
-        const message = { a, b, sum};
+        const message = { a, b, sum };
+
         ctx.sendJSON(message);
+    }    
         <% } else if (appType == 'website') { %>
         const message = `${a} + ${b} = ${sum}`;
             <% if (viewEngine) { %>
-        ctx.render({message});
+        ctx.render({ message });
             <% } else { %>
         ctx.send(message);
             <% } %>
-<% } -%>
     }
+<% } -%>
 }
