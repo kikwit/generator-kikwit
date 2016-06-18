@@ -15,7 +15,8 @@ export default class Home {
         const message = { a, b, sum };
 
         ctx.sendJSON(message);
-    }    
+    }
+}
         <% } else if (appType == 'website') { %>
         const message = `${a} + ${b} = ${sum}`;
             <% if (viewEngine) { %>
@@ -24,5 +25,5 @@ export default class Home {
         ctx.send(message);
             <% } %>
     }
-<% } -%>
 }
+<% } %>
