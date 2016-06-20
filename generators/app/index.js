@@ -265,7 +265,18 @@ module.exports = generators.Base.extend({
             this.options
         );
 
-        this.directory('services');        
+        this.directory('services');  
+
+        if (this.options.logger && this.options.logger.value) {
+
+            const loggerFile = this.options.logger.value + '.js';
+
+            this.fs.copyTpl(
+                this.templatePath('loggers/' + loggerFile),
+                this.destinationPath('services/' + loggerFile),
+                this.options
+            );
+        }      
 
         fs.mkdirSync(this.destinationPath('controllers'));
         
