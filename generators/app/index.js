@@ -273,7 +273,7 @@ module.exports = generators.Base.extend({
 
             this.fs.copyTpl(
                 this.templatePath('loggers/' + loggerFile),
-                this.destinationPath('services/' + loggerFile),
+                this.destinationPath('services/logger.js'),
                 this.options
             );
         }      

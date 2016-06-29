@@ -2,21 +2,20 @@
 
 import { controller, get, inject } from 'kikwit';
 
-<% if (logger) { %>@inject('logger') /* inject the Logger service (Logger class from services/ folder) */ <% } -%>    
+<% if (logger) { %>@inject('logger') /* injects the Logger service (Logger class from services/ folder) */ <% } -%>    
 @controller
 export default class Home {
 
-    @inject('adder') /* inject the Adder service (Adder class from services/ folder) */
+    @inject('adder') /* injects the Adder service (Adder class from services/ folder) */
     @get
     index(ctx) {
 
         const [a, b] = [2, 3];
 
-        const adder = ctx.services.adder; /* provided by @inject('adder') */
+        const adder = ctx.services.adder; /* adder provided by @inject('adder') */
         const sum = adder.add(a, b); 
 <% if (logger) { %>
-        const logger = ctx.services.logger; /* provided by @inject('logger') */
-        logger.info(`${a} + ${b} = ${sum}`);
+        ctx.services.logger.info(`${a} + ${b} = ${sum}`); /* logger provided by @inject('logger') */
 <% } -%>         
 <% if (appType == 'api') { -%> 
         const message = { a, b, sum };
