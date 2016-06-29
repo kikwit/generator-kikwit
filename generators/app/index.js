@@ -55,10 +55,10 @@ const assertionLibraries = [
 ];
 
 const dependencies = {
-    'babel-core': '^6.9.1',
+    'babel-core': '^6.10.4',
     'babel-plugin-transform-decorators-legacy': '^1.3.4',
-    'babel-plugin-transform-es2015-modules-commonjs': '^6.8.0',
-    'kikwit': '^0.4.0'
+    'babel-plugin-transform-es2015-modules-commonjs': '^6.10.3',
+    'kikwit': '^0.6.0'
 };
 
 const autoRestartOnChangeDependency = {
