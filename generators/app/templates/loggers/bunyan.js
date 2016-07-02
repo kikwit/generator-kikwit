@@ -5,7 +5,7 @@ import bunyan from 'bunyan';
 @service('logger', true)
 export class Logger {
 
-    constructor(ctx) {
+    constructor() {
 
         const logger= bunyan.createLogger({
             name: '<%= appName %>',

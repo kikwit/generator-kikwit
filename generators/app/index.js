@@ -30,20 +30,20 @@ const loggers = [
 ];
 
 const testingFrameworks = [
-    { name: 'Jasmine', value: 'jasmine', version: '^2.4.1', npmScript: 'jasmine JASMINE_CONFIG_PATH=test/support/jasmine.json', copyFiles: (gen) => {
-        gen.directory('tests/jasmin/test', 'test');
+    { name: 'Jasmine', value: 'jasmine', version: '^2.4.1', npmScript: 'jasmine JASMINE_CONFIG_PATH=tests/support/jasmine.json', copyFiles: (gen) => {
+        gen.directory('tests/jasmin/test', 'tests');
     }},
-    { name: 'Mocha', value: 'mocha', version: '^2.5.3', npmScript: 'mocha --compilers js:babel-core/register test/**/*.js', copyFiles: (gen) => {
-        gen.directory('tests/mocha/test', 'test');
+    { name: 'Mocha', value: 'mocha', version: '^2.5.3', npmScript: 'mocha --compilers js:babel-core/register tests/**/*.js', copyFiles: (gen) => {
+        gen.directory('tests/mocha/test', 'tests');
     }},
     { name: 'Buster.js', value: 'buster', version:'^0.7.18', npmScript: 'buster-test --config tests/buster.js', copyFiles: (gen) => {
 
         gen.fs.copyTpl(
             gen.templatePath('tests/buster/buster.js'),
-            gen.destinationPath('test/buster.js'),
+            gen.destinationPath('tests/buster.js'),
             gen.options
         );
-        gen.directory('tests/buster/test', 'test');
+        gen.directory('tests/buster/test', 'tests');
     }},
     { name: 'None of the above' }
 ];

@@ -1,6 +1,6 @@
 {
   "name": "generator-kikwit",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "yeoman-generator",
   "homepage": "https://github.com/kikwit/generator-kikwit#readme",
   "author": {
@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "prepublish": "gulp prepublish",
-    "test": "mocha --compilers js:babel-core/register --timeout 60000 test/**/*.js"
+    "test": "mocha --compilers js:babel-core/register --timeout 60000 tests/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.10.3",
     "yeoman-test": "^1.4.0",
     "yeoman-assert": "^2.2.1",
-    "eslint": "^2.13.1",
+    "eslint": "^3.0.0",
     "eslint-config-xo-space": "^0.14.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^2.0.0",

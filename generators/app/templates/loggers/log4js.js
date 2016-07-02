@@ -5,7 +5,7 @@ import log4js from 'log4js';
 @service('logger', true)
 export class Logger {
 
-    constructor(ctx) {
+    constructor() {
 
         log4js.configure({
             appenders: [

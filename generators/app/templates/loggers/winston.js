@@ -5,7 +5,7 @@ import winston from 'winston';
 @service('logger', true)
 export class Logger {
 
-    constructor(ctx) {
+    constructor() {
 
         const logger = new (winston.Logger)({
             transports: [
