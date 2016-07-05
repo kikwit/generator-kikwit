@@ -11,9 +11,8 @@ export default class Home {
     index(ctx) {
 
         const [a, b] = [2, 3];
-
-        const adder = ctx.services.adder; /* adder provided by @inject('adder') */
-        const sum = adder.add(a, b); 
+        
+        const sum = ctx.services.adder.add(a, b); /* adder provided by @inject('adder') */
 <% if (logger) { %>
         ctx.services.logger.info(`${a} + ${b} = ${sum}`); /* logger provided by @inject('logger') */
 <% } -%>         

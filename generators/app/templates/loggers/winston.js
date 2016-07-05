@@ -2,7 +2,7 @@ import { service } from 'kikwit';
 
 import winston from 'winston';
 
-@service('logger', true)
+@service('logger', true) // makes the Logger class 'injectable' into controllers and other services using @inject('logger')
 export class Logger {
 
     constructor() {
