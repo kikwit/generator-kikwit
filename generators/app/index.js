@@ -211,10 +211,14 @@ module.exports = generators.Base.extend({
                 
         if (this.options.autoRestartOnChange) {
 
-            if (viewEngine.devWatch) {
-                devStartCMD = `nodemon --ext js,${viewEngine.extension} --ignore public/ --ignore test/ --ignore views/**/*.js ./boot.js`;
+            if (this.options.viewEngine) {
+                if (this.options.viewEngine.devWatch) {
+                    devStartCMD = `nodemon --ext js,${viewEngine.extension} --ignore public/ --ignore tests/ --ignore views/**/*.js ./boot.js`;
+                } else {
+                    devStartCMD = 'nodemon --ignore public/ --ignore tests/ --ignore views/ ./boot.js';
+                }
             } else {
-                devStartCMD = 'nodemon --ignore public/ --ignore test/ --ignore views/ ./boot.js';
+                devStartCMD = 'nodemon --ignore public/ --ignore tests/ ./boot.js';
             }
 
             pkg.devDependencies[autoRestartOnChangeDependency.value] = autoRestartOnChangeDependency.version;
