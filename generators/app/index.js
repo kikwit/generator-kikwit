@@ -14,8 +14,8 @@ const viewEngines = [
     { name: 'DustJS-LinkedIn', value: 'dustjs-linkedin', extension: 'dust', consolidateKey: 'dust', version: '^2.7.2' },
     { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.4.2' },
     { name: 'Handlebars', value: 'handlebars', extension: 'hbs', consolidateKey: 'handlebars', version: '^4.0.5' },
-    { name: 'Pug', value: 'pug', extension: 'pug', consolidateKey: 'pug', version: '^2.0.0-beta2' },
-    { name: 'Marko', value: 'marko', extension: 'marko', renderFunction: markoRenderFunction, version: '^3.4.6'},
+    { name: 'Pug', value: 'pug', extension: 'pug', consolidateKey: 'pug', version: '^2.0.0-beta3' },
+    { name: 'Marko', value: 'marko', extension: 'marko', devWatch: true, renderFunction: markoRenderFunction, version: '^3.7.2'},
     { name: 'Mustache', value: 'mustache', extension: 'mustache', consolidateKey: 'mustache', version: '^2.2.1'},
     { name: 'Nunjucks', value: 'nunjucks', extension: 'html', consolidateKey: 'nunjucks', version: '^2.4.2' },
     { name: 'Vash', value: 'vash', extension: 'vash', consolidateKey: 'vash', version: '^0.12.1' },
@@ -147,7 +147,7 @@ module.exports = generators.Base.extend({
     },
 
     writing: function()  {
-    
+
         var pkg = {
             name: this.options.appName,
             version: '0.1.0',
@@ -211,8 +211,12 @@ module.exports = generators.Base.extend({
                 
         if (this.options.autoRestartOnChange) {
 
-            devStartCMD = 'nodemon --ignore public/ --ignore test/ --ignore views/ ./boot.js',
-            
+            if (viewEngine.devWatch) {
+                devStartCMD = `nodemon --ext js,${viewEngine.extension} --ignore public/ --ignore test/ --ignore views/**/*.js ./boot.js`;
+            } else {
+                devStartCMD = 'nodemon --ignore public/ --ignore test/ --ignore views/ ./boot.js';
+            }
+
             pkg.devDependencies[autoRestartOnChangeDependency.value] = autoRestartOnChangeDependency.version;
             
         } else {
@@ -312,7 +316,7 @@ function markoRenderFunction() {
     
     return function (filePath, options, callback) {
 
-        var template = marko.load(filePath, {writeToDisk: true});
+        var template = marko.load(filePath, { writeToDisk: true });
         
         return template.render(options, callback);
     }
