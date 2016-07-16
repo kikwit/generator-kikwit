@@ -213,7 +213,7 @@ module.exports = generators.Base.extend({
 
             if (this.options.viewEngine) {
                 if (this.options.viewEngine.devWatch) {
-                    devStartCMD = `nodemon --ext js,${viewEngine.extension} --ignore public/ --ignore tests/ --ignore views/**/*.js ./boot.js`;
+                    devStartCMD = `nodemon --ext js,${this.options.viewEngine.extension} --ignore public/ --ignore tests/ --ignore views/**/*.js ./boot.js`;
                 } else {
                     devStartCMD = 'nodemon --ignore public/ --ignore tests/ --ignore views/ ./boot.js';
                 }
