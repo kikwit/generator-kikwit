@@ -55,7 +55,7 @@ const assertionLibraries = [
 ];
 
 const dependencies = {
-    'babel-core': '^6.10.4',
+    'babel-core': '^6.11.4',
     'babel-plugin-transform-decorators-legacy': '^1.3.4',
     'babel-plugin-transform-es2015-modules-commonjs': '^6.10.3',
     'kikwit': '^1.0.0'
@@ -273,7 +273,13 @@ module.exports = generators.Base.extend({
             this.options
         );
 
-        this.directory('services');  
+        fs.mkdirSync(this.destinationPath('services'));
+
+        this.fs.copy(
+            this.templatePath('services/adder.js'),
+            this.destinationPath('services/adder.js'),
+            this.options
+        );
 
         if (this.options.logger && this.options.logger.value) {
 

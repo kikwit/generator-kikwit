@@ -4,7 +4,7 @@ import { controller, get, inject } from 'kikwit';
 
 <% if (logger) { %>@inject('logger') /* injects the Logger service (Logger class from services/ folder) */ <% } -%>    
 @controller
-export default class Home {
+export class Home {
 
     @inject('adder') /* injects the Adder service (Adder class from services/ folder) */
     @get
