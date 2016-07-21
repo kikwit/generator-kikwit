@@ -58,7 +58,7 @@ const dependencies = {
     'babel-core': '^6.11.4',
     'babel-plugin-transform-decorators-legacy': '^1.3.4',
     'babel-plugin-transform-es2015-modules-commonjs': '^6.10.3',
-    'kikwit': '^1.0.0'
+    'kikwit': '^1.1.0'
 };
 
 const autoRestartOnChangeDependency = {
@@ -275,7 +275,7 @@ module.exports = generators.Base.extend({
 
         fs.mkdirSync(this.destinationPath('services'));
 
-        this.fs.copy(
+        this.fs.copyTpl(
             this.templatePath('services/adder.js'),
             this.destinationPath('services/adder.js'),
             this.options
