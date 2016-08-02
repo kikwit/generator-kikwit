@@ -88,10 +88,10 @@ module.exports = generators.Base.extend({
             {
                 type: 'list',
                 name: 'appType',
-                message: 'What sort of app are you creating?',
+                message: 'What type of application are you creating?',
                 choices: [
                     { name: "Website", value: 'website' },
-                    { name: 'API', value: 'api' }
+                    { name: 'Web API', value: 'api' }
                 ],
                 default: 'website'
             },
