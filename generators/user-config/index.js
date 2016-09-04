@@ -20,6 +20,11 @@ module.exports = generators.Base.extend({
 
     constructor: function () {
 
+        // The following 2 lines are for avoiding the issue described at
+        // https://github.com/slara/generator-reveal/issues/65
+        Number.prototype.match = String.prototype.match;
+        Number.prototype.charAt = String.prototype.charAt;        
+
         generators.Base.apply(this, arguments);
 
         this.argument('command', { type: String, required: false });
