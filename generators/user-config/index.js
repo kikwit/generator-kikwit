@@ -32,7 +32,11 @@ module.exports = generators.Base.extend({
         this.argument('value', { type: String, required: false });
 
         this.command = (this.command || 'show').toLowerCase();
-        this.key = (this.key || '').toLowerCase();
+        this.key = (String(this.key) || '').toLowerCase();
+
+        if (this.value && /true|false/i.test(this.value)) {
+            this.value = this.value.toLowerCase() === 'true';
+        }
     },
 
     validating: function () {
@@ -51,7 +55,7 @@ module.exports = generators.Base.extend({
             return;
         }
 
-        if (constraints.value && (!this.value || !this.value.trim())) {
+        if (constraints.value && (this.value == null || !String(this.value).trim())) {
 
             this.log(`Please specify a configuration value`);
             return;
