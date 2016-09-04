@@ -11,11 +11,11 @@ var yosay = require('yosay');
 const consolidateVersion = '^0.14.1';
 
 const viewEngines = [
-    { name: 'DustJS-LinkedIn', value: 'dustjs-linkedin', extension: 'dust', consolidateKey: 'dust', version: '^2.7.2' },
-    { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.4.2' },
+    { name: 'DustJS-LinkedIn', value: 'dustjs-linkedin', extension: 'dust', consolidateKey: 'dust', version: '^2.7.3' },
+    { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.5.1' },
     { name: 'Handlebars', value: 'handlebars', extension: 'hbs', consolidateKey: 'handlebars', version: '^4.0.5' },
-    { name: 'Pug', value: 'pug', extension: 'pug', consolidateKey: 'pug', version: '^2.0.0-beta4' },
-    { name: 'Marko', value: 'marko', extension: 'marko', devWatch: true, renderFunction: markoRenderFunction, version: '^3.8.0'},
+    { name: 'Pug', value: 'pug', extension: 'pug', consolidateKey: 'pug', version: '^2.0.0-beta6' },
+    { name: 'Marko', value: 'marko', extension: 'marko', devWatch: true, renderFunction: markoRenderFunction, version: '^3.10.0'},
     { name: 'Mustache', value: 'mustache', extension: 'mustache', consolidateKey: 'mustache', version: '^2.2.1'},
     { name: 'Nunjucks', value: 'nunjucks', extension: 'html', consolidateKey: 'nunjucks', version: '^2.4.2' },
     { name: 'Vash', value: 'vash', extension: 'vash', consolidateKey: 'vash', version: '^0.12.1' },
@@ -30,10 +30,10 @@ const loggers = [
 ];
 
 const testingFrameworks = [
-    { name: 'Jasmine', value: 'jasmine', version: '^2.4.1', npmScript: 'jasmine JASMINE_CONFIG_PATH=tests/support/jasmine.json', copyFiles: (gen) => {
+    { name: 'Jasmine', value: 'jasmine', version: '^2.5.0', npmScript: 'jasmine JASMINE_CONFIG_PATH=tests/support/jasmine.json', copyFiles: (gen) => {
         gen.directory('tests/jasmin/test', 'tests');
     }},
-    { name: 'Mocha', value: 'mocha', version: '^2.5.3', npmScript: 'mocha --compilers js:babel-core/register tests/**/*.js', copyFiles: (gen) => {
+    { name: 'Mocha', value: 'mocha', version: '^3.0.2', npmScript: 'mocha --compilers js:babel-core/register tests/**/*.js', copyFiles: (gen) => {
         gen.directory('tests/mocha/test', 'tests');
     }},
     { name: 'Buster.js', value: 'buster', version:'^0.7.18', npmScript: 'buster-test --config tests/buster.js', copyFiles: (gen) => {
@@ -50,19 +50,19 @@ const testingFrameworks = [
 
 const assertionLibraries = [
     { name: 'Chai', value: 'chai', version: '^3.5.0' },
-    { name: 'Should.js', value: 'should', version: '^10.0.0' },
+    { name: 'Should.js', value: 'should', version: '^11.1.0' },
     { name: 'None of the above', value: null }
 ];
 
 const dependencies = {
-    'babel-core': '^6.11.4',
+    'babel-core': '^6.14.0',
     'babel-plugin-transform-decorators-legacy': '^1.3.4',
-    'babel-plugin-transform-es2015-modules-commonjs': '^6.10.3',
-    'kikwit': '^1.4.0'
+    'babel-plugin-transform-es2015-modules-commonjs': '^6.14.0',
+    'kikwit': '^2.1.0'
 };
 
 const autoRestartOnChangeDependency = {
-    value: 'nodemon', version: '^1.9.2'   
+    value: 'nodemon', version: '^1.10.2'   
 };
 
 module.exports = generators.Base.extend({
@@ -313,7 +313,7 @@ module.exports = generators.Base.extend({
     install: function() {
 
         if (!this.skipDependencyInstall) {
-            this.log(`\r\nRunning ${chalk.yellow.bold('npm install')} to install dependencies. If it fails please try running it yourself.\r\n`);
+            this.log(`\r\nRunning ${chalk.yellow.bold('npm install')} to install dependencies. If this fails, try running the command yourself.\r\n`);
             this.npmInstall();   
         }
     }
