@@ -16,6 +16,8 @@ const allowedCommands = {
     show: { key: false, value: false, exec: showConfig }
 };
 
+const hierarchySeparator = '__';
+
 module.exports = generators.Base.extend({
 
     constructor: function () {
@@ -93,7 +95,7 @@ function showConfig(generator) {
 function removeValue(generator) {
 
     const configFile = getUserConfigFile();
-    const props = generator.key.split('.');
+    const props = generator.key.split(hierarchySeparator);
     const propsCount = props.length;
 
     let data = configFile.data;
@@ -137,7 +139,7 @@ function removeValue(generator) {
 function setValue(generator) {
 
     const configFile = getUserConfigFile();
-    const props = generator.key.split('.');
+    const props = generator.key.split(hierarchySeparator);
     const propsCount = props.length;
 
     let data = configFile.data;
