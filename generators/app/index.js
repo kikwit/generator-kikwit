@@ -152,6 +152,9 @@ module.exports = generators.Base.extend({
             name: this.options.appName,
             version: '0.1.0',
             main: 'boot.js',
+            config: {
+                applicationId: (Math.random() + 1).toString(36).substring(2, 16)
+            },
             engines: {
                 node: "^6.0.0"
             },
