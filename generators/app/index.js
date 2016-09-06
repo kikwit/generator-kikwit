@@ -261,26 +261,24 @@ module.exports = generators.Base.extend({
             this.templatePath('.babelrc'),
             this.destinationPath('.babelrc')
         );
-        
-        fs.mkdirSync(this.destinationPath('config'));
-        
-        this.fs.copyTpl(
-            this.templatePath('config/default.js'),
-            this.destinationPath('config/default.js'),
-            this.options
-        );
-        
-        this.fs.copyTpl(
-            this.templatePath('config/production.js'),
-            this.destinationPath('config/production.js'),
-            this.options
-        );
 
         fs.mkdirSync(this.destinationPath('services'));
 
         this.fs.copyTpl(
             this.templatePath('services/adder.js'),
             this.destinationPath('services/adder.js'),
+            this.options
+        );
+
+        this.fs.copyTpl(
+            this.templatePath('services/defaultConfiguration.js'),
+            this.destinationPath('services/defaultConfiguration.js'),
+            this.options
+        );
+
+        this.fs.copyTpl(
+            this.templatePath('services/productionConfiguration.js'),
+            this.destinationPath('services/productionConfiguration.js'),
             this.options
         );
 
