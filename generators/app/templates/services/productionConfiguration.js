@@ -9,6 +9,10 @@ export class ProductionConfiguration {
     
         return {
             
+            cluster: true,
+            route: {
+                overview: false  
+            },
             server: {
                 port: 80
             }<% if (viewEngine) { -%>,

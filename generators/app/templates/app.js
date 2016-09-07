@@ -6,14 +6,14 @@ const server = new Server();
 
 server.configure(config => {
 
-    config.addFromService('defaultConfiguration');
-    config.addFromService(`${config.environment}Configuration`);
-    
+    config.addService('defaultConfiguration')
+    config.addService(`${config.environment}Configuration`);
+ 
     if (config.isEnvironment('development')) {
         config.addUserConfig();
     }
     
-    config.addEnvironmentVariables();
+    config.addEnvironmentVariables();  
 });
 
 server.start().then(() => {

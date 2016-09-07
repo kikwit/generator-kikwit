@@ -58,7 +58,7 @@ const dependencies = {
     'babel-core': '^6.14.0',
     'babel-plugin-transform-decorators-legacy': '^1.3.4',
     'babel-plugin-transform-es2015-modules-commonjs': '^6.14.0',
-    'kikwit': '^3.0.0'
+    'kikwit': '^3.1.0'
 };
 
 const autoRestartOnChangeDependency = {
