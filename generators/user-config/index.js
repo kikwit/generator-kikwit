@@ -10,13 +10,14 @@ const chalk = require('chalk');
 const mkdirp = require('mkdirp');
 
 const allowedCommands = {
-    clear: { key: false, value: false, exec: clearValues },    
+    clear: { key: false, value: false, exec: clearValues },
+    get: { key: true, value: false, exec: getValue },    
     remove: { key: true, value: false, exec: removeValue },        
     set: { key: true, value: true, exec: setValue },
     show: { key: false, value: false, exec: showConfig }
 };
 
-const hierarchySeparator = '__';
+const hierarchySeparator = '.';
 
 module.exports = generators.Base.extend({
 
@@ -34,7 +35,10 @@ module.exports = generators.Base.extend({
         this.argument('value', { type: String, required: false });
 
         this.command = (this.command || 'show').toLowerCase();
-        this.key = (String(this.key) || '').toLowerCase();
+
+        if (this.key) {
+            this.key = this.key.toLowerCase();
+        }
 
         if (this.value && /true|false/i.test(this.value)) {
             this.value = this.value.toLowerCase() === 'true';
@@ -52,8 +56,8 @@ module.exports = generators.Base.extend({
         }
 
         if (constraints.key && (!this.key || !this.key.trim())) {
-            
-            this.log(`Please specify a configuration key`);
+          
+            this.log('Please specify a configuration key');
             return;
         }
 
@@ -81,6 +85,47 @@ function clearValues(generator) {
     fs.writeFileSync(configFile.filePath, '{}');
 
     generator.log(`User config keys cleared.`);
+}
+
+function getValue(generator) {
+
+    const configFile = getUserConfigFile();
+
+    let data = configFile.data;
+
+    if (generator.key && generator.key.trim().length) {
+
+        let obj = data;
+
+        const props = generator.key.split(hierarchySeparator);
+        const propsCount = props.length;
+
+        for (let [index, prop] of props.entries()) {
+
+            if (index == propsCount - 1) {
+                data = obj[prop];
+                break;
+            } 
+            
+            if (obj[prop] == null || !(obj[prop] instanceof Object)) {
+
+                data = undefined;
+                break;
+            }
+
+            obj = obj[prop];
+        }
+    }
+
+    if (data == undefined) {
+        
+        generator.log(`Config key ${ chalk.bold(generator.key) } is undefined.`);
+        return;
+    }
+
+    const fileContent = JSON.stringify(data, null, 2);
+
+    generator.log(`${ chalk.bold(fileContent) }`);
 }
 
 function showConfig(generator) {
