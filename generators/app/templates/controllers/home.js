@@ -8,26 +8,26 @@ export class Home {
 
     @inject('adder') /* injects the Adder service (Adder class from services/ folder) */
     @get
-    index(ctx) {
+    index(context) {
 
         const [a, b] = [2, 3];
         
-        const sum = ctx.services.adder.add(a, b); /* adder provided by @inject('adder') */
+        const sum = context.services.adder.add(a, b); /* adder provided by @inject('adder') */
 <% if (logger) { %>
-        ctx.services.logger.info(`${a} + ${b} = ${sum}`); /* logger provided by @inject('logger') */
+        context.services.logger.info(`${a} + ${b} = ${sum}`); /* logger provided by @inject('logger') */
 <% } -%>         
 <% if (appType == 'api') { -%> 
         const message = { a, b, sum };
 
-        ctx.sendJSON(message);
+        context.sendJSON(message);
     }
 }
 <% } else if (appType == 'website') { -%>
         const message = `${a} + ${b} = ${sum}`;
             <% if (viewEngine) { %>
-        ctx.render({ message });
+        context.render({ message });
             <% } else { %>
-        ctx.send(message);
+        context.send(message);
             <% } %>
     }
 }
