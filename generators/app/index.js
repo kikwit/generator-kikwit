@@ -30,12 +30,6 @@ const loggers = [
 ];
 
 const testingFrameworks = [
-    { name: 'Jasmine', value: 'jasmine', version: '^2.5.0', npmScript: 'jasmine JASMINE_CONFIG_PATH=tests/support/jasmine.json', copyFiles: (gen) => {
-        gen.directory('tests/jasmin/test', 'tests');
-    }},
-    { name: 'Mocha', value: 'mocha', version: '^3.0.2', npmScript: 'mocha --compilers js:babel-core/register tests/**/*.js', copyFiles: (gen) => {
-        gen.directory('tests/mocha/test', 'tests');
-    }},
     { name: 'Buster.js', value: 'buster', version:'^0.7.18', npmScript: 'buster-test --config tests/buster.js', copyFiles: (gen) => {
 
         gen.fs.copyTpl(
@@ -44,7 +38,16 @@ const testingFrameworks = [
             gen.options
         );
         gen.directory('tests/buster/test', 'tests');
+    }},    
+    { name: 'Jasmine', value: 'jasmine', version: '^2.5.0', npmScript: 'jasmine JASMINE_CONFIG_PATH=tests/support/jasmine.json', copyFiles: (gen) => {
+        gen.directory('tests/jasmin/test', 'tests');
     }},
+    { name: 'Mocha', value: 'mocha', version: '^3.0.2', npmScript: 'mocha --compilers js:babel-core/register tests/**/*.js', copyFiles: (gen) => {
+        gen.directory('tests/mocha/test', 'tests');
+    }},
+    { name: 'Tape', value: 'tape', version: '^4.6.0', npmScript: 'tape -r babel-core/register tests/**/*.js', copyFiles: (gen) => {
+        gen.directory('tests/tape/test', 'tests');
+    }},    
     { name: 'None of the above' }
 ];
 
