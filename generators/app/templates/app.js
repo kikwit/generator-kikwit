@@ -6,8 +6,8 @@ const server = new Server();
 
 server.configure(config => {
 
-    config.addService('defaultConfiguration')
-    config.addService(`${config.environment}Configuration`, true);
+    config.addJavaScriptFile('config/default.js');
+    config.addJavaScriptFile(`config/${config.environment}.js`, true);    
  
     if (config.isEnvironment('development')) {
         config.addUserConfig();
