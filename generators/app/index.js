@@ -4,18 +4,18 @@ var fs = require('fs');
 var os = require('os');
 var path = require('path');
 
-var generators = require('yeoman-generator');
+var Generator = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 
-const consolidateVersion = '^0.14.4';
+const consolidateVersion = '^0.14.5';
 
 const viewEngines = [
     { name: 'DustJS-LinkedIn', value: 'dustjs-linkedin', extension: 'dust', consolidateKey: 'dust', version: '^2.7.4' },
-    { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.5.2' },
+    { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.5.5' },
     { name: 'Handlebars', value: 'handlebars', extension: 'hbs', consolidateKey: 'handlebars', version: '^4.0.6' },
-    { name: 'Pug', value: 'pug', extension: 'pug', consolidateKey: 'pug', version: '^2.0.0-beta6' },
-    { name: 'Marko', value: 'marko', extension: 'marko', devWatch: true, renderFunction: markoRenderFunction, version: '^3.12.1'},
+    { name: 'Pug', value: 'pug', extension: 'pug', consolidateKey: 'pug', version: '^2.0.0-beta10' },
+    { name: 'Marko', value: 'marko', extension: 'marko', devWatch: true, renderFunction: markoRenderFunction, version: '^3.14.1'},
     { name: 'Mustache', value: 'mustache', extension: 'mustache', consolidateKey: 'mustache', version: '^2.3.0'},
     { name: 'Nunjucks', value: 'nunjucks', extension: 'html', consolidateKey: 'nunjucks', version: '^3.0.0' },
     { name: 'Vash', value: 'vash', extension: 'vash', consolidateKey: 'vash', version: '^0.12.2' },
@@ -24,8 +24,8 @@ const viewEngines = [
 
 const loggers = [
     { name: 'Bunyan', value: 'bunyan', logFunction: 'getBunyanLogFunction', version: '^1.8.5' },
-    { name: 'Log4JS', value: 'log4js', logFunction: 'getLog4JSLogFunction', version: '^1.0.1' },
-    { name: 'Winston', value: 'winston', logFunction: 'getWinstonLogFunction', version: '^2.3.0' },
+    { name: 'Log4JS', value: 'log4js', logFunction: 'getLog4JSLogFunction', version: '^1.1.0' },
+    { name: 'Winston', value: 'winston', logFunction: 'getWinstonLogFunction', version: '^2.3.1' },
     { name: 'None of the above', value: null }
 ];
 
@@ -37,48 +37,45 @@ const testingFrameworks = [
             gen.destinationPath('tests/buster.js'),
             gen.options
         );
-        gen.directory('tests/buster/test', 'tests');
-    }},    
-    { name: 'Jasmine', value: 'jasmine', version: '^2.5.2', npmScript: 'jasmine JASMINE_CONFIG_PATH=tests/support/jasmine.json', copyFiles: (gen) => {
-        gen.directory('tests/jasmin/test', 'tests');
+        gen.fs.copy(gen.templatePath('tests/buster/test/'), 'tests/');
     }},
-    { name: 'Mocha', value: 'mocha', version: '^3.1.2', npmScript: 'mocha --compilers js:babel-core/register tests/**/*.js', copyFiles: (gen) => {
-        gen.directory('tests/mocha/test', 'tests');
+    { name: 'Jasmine', value: 'jasmine', version: '^2.5.3', npmScript: 'jasmine JASMINE_CONFIG_PATH=tests/support/jasmine.json', copyFiles: (gen) => {
+        gen.fs.copy(gen.templatePath('tests/jasmine/test/'), 'tests/');
     }},
-    { name: 'Tape', value: 'tape', version: '^4.6.2', npmScript: 'tape -r babel-core/register tests/**/*.js', copyFiles: (gen) => {
-        gen.directory('tests/tape/test', 'tests');
+    { name: 'Mocha', value: 'mocha', version: '^3.2.0', npmScript: 'mocha --compilers js:babel-core/register tests/**/*.js', copyFiles: (gen) => {
+        gen.fs.copy(gen.templatePath('tests/mocha/test/'), 'tests/');
+    }},
+    { name: 'Tape', value: 'tape', version: '^4.6.3', npmScript: 'tape -r babel-core/register tests/**/*.js', copyFiles: (gen) => {
+        gen.fs.copy(gen.templatePath('tests/tape/test/'), 'tests/');
     }},    
     { name: 'None of the above' }
 ];
 
 const assertionLibraries = [
     { name: 'Chai', value: 'chai', version: '^3.5.0' },
-    { name: 'Should.js', value: 'should', version: '^11.1.1' },
+    { name: 'Should.js', value: 'should', version: '^11.2.0' },
     { name: 'None of the above', value: null }
 ];
 
 const dependencies = {
-    'babel-core': '^6.18.2',
+    'babel-core': '^6.22.1',
     'babel-plugin-transform-decorators-legacy': '^1.3.4',
-    'babel-plugin-transform-es2015-modules-commonjs': '^6.18.0',
-    'kikwit': '^3.5.0'
+    'babel-plugin-transform-es2015-modules-commonjs': '^6.22.0',
+    'kikwit': '^3.7.0'
 };
 
 const autoRestartOnChangeDependency = {
     value: 'nodemon', version: '^1.11.0'   
 };
 
-module.exports = generators.Base.extend({
+module.exports = class extends Generator{
 
-    constructor: function() {
-        
-        generators.Base.apply(this, arguments);
-    },
+    constructor(args, opts) {
+        super(args, opts);
+    }
 
-    prompting: function() {
-        
-        let done = this.async();
-        
+    prompting() {
+
         this.log(yosay(`Welcome to ${chalk.yellow.bold('Kikwit')} generator!`));
 
         let prompts = [
@@ -136,20 +133,17 @@ module.exports = generators.Base.extend({
             },
         ];
 
-        this.prompt(prompts).then(answers => {
+        return this.prompt(prompts).then(answers => {
 
             this.options = answers;
             
             if (this.options.appType == 'api') {
                 this.options.viewEngine = null;
             }
-            
-            done();
-        });
-            
-    },
+        });       
+    }
 
-    writing: function()  {
+    writing() {
 
         var pkg = {
             name: this.options.appName,
@@ -247,7 +241,7 @@ module.exports = generators.Base.extend({
         
         this.log('\r\n');
 
-        this.write('package.json', JSON.stringify(pkg, null, '\t'));   
+        this.fs.write('package.json', JSON.stringify(pkg, null, '\t'));   
 
         this.fs.copy(
             this.templatePath('boot.js'),
@@ -307,24 +301,23 @@ module.exports = generators.Base.extend({
         );
 
         if (this.options.appType == 'website') {
-            this.directory('public');
+            this.fs.copy(this.templatePath('public'), 'public');
         }
-        
+     
         if (this.options.viewEngine) {
             fs.mkdirSync(this.destinationPath('views'));
-            this.directory(`views/${this.options.viewEngine.value}/Home`, 'views/Home');
+            this.fs.copy(this.templatePath(`views/${this.options.viewEngine.value}/Home`), 'views/Home');
         }
-    },
+    }
     
-    install: function() {
+    install() {
 
         if (!this.skipDependencyInstall) {
             this.log(`\r\nRunning ${chalk.yellow.bold('npm install')} to install dependencies. If this fails, try running the command yourself.\r\n`);
             this.npmInstall();   
         }
-    }
-    
-});
+    }   
+}
 
 function markoRenderFunction() {
 
