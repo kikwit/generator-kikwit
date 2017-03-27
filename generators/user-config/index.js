@@ -19,16 +19,15 @@ const allowedCommands = {
 
 const hierarchySeparator = '.';
 
-module.exports = generators.Base.extend({
+module.exports = class extends Generator{
 
-    constructor: function () {
+    constructor(args, opts) {
+        super(args, opts);
 
         // The following 2 lines are for avoiding the issue described at
         // https://github.com/slara/generator-reveal/issues/65
         Number.prototype.match = String.prototype.match;
         Number.prototype.charAt = String.prototype.charAt;        
-
-        generators.Base.apply(this, arguments);
 
         this.argument('command', { type: String, required: false });
         this.argument('key', { type: String, required: false });
@@ -43,9 +42,9 @@ module.exports = generators.Base.extend({
         if (this.value && /true|false/i.test(this.value)) {
             this.value = this.value.toLowerCase() === 'true';
         }
-    },
+    }
 
-    validating: function () {
+    validating() {
 
         const constraints = allowedCommands[this.command];
 

@@ -18,7 +18,7 @@ export default {
             <%= viewEngine.extension %>: <% if (viewEngine.consolidateKey) { -%>
 consolidate['<%= viewEngine.consolidateKey %>']
     <% } else if (viewEngine.renderFunction) { -%>
-<%= viewEngine.renderFunction.name %>()
+<%= viewEngine.renderFunction.name %>
     <% } -%>
     }
     }<% } %>

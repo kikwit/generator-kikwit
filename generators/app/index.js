@@ -11,11 +11,11 @@ var yosay = require('yosay');
 const consolidateVersion = '^0.14.5';
 
 const viewEngines = [
-    { name: 'DustJS-LinkedIn', value: 'dustjs-linkedin', extension: 'dust', consolidateKey: 'dust', version: '^2.7.4' },
-    { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.5.5' },
+    { name: 'DustJS-LinkedIn', value: 'dustjs-linkedin', extension: 'dust', consolidateKey: 'dust', version: '^2.7.5' },
+    { name: 'EJS', value: 'ejs', extension: 'ejs', consolidateKey: 'ejs', version: '^2.5.6' },
     { name: 'Handlebars', value: 'handlebars', extension: 'hbs', consolidateKey: 'handlebars', version: '^4.0.6' },
-    { name: 'Pug', value: 'pug', extension: 'pug', consolidateKey: 'pug', version: '^2.0.0-beta10' },
-    { name: 'Marko', value: 'marko', extension: 'marko', devWatch: true, renderFunction: markoRenderFunction, version: '^3.14.1'},
+    { name: 'Pug', value: 'pug', extension: 'pug', consolidateKey: 'pug', version: '^2.0.0-beta11' },
+    { name: 'Marko', value: 'marko', extension: 'marko', devWatch: true, renderFunction: markoRenderFunction, bootOptions: [`require('marko/node-require');`], version: '^4.1.3'},
     { name: 'Mustache', value: 'mustache', extension: 'mustache', consolidateKey: 'mustache', version: '^2.3.0'},
     { name: 'Nunjucks', value: 'nunjucks', extension: 'html', consolidateKey: 'nunjucks', version: '^3.0.0' },
     { name: 'Vash', value: 'vash', extension: 'vash', consolidateKey: 'vash', version: '^0.12.2' },
@@ -23,8 +23,8 @@ const viewEngines = [
 ];
 
 const loggers = [
-    { name: 'Bunyan', value: 'bunyan', logFunction: 'getBunyanLogFunction', version: '^1.8.5' },
-    { name: 'Log4JS', value: 'log4js', logFunction: 'getLog4JSLogFunction', version: '^1.1.0' },
+    { name: 'Bunyan', value: 'bunyan', logFunction: 'getBunyanLogFunction', version: '^1.8.9' },
+    { name: 'Log4JS', value: 'log4js', logFunction: 'getLog4JSLogFunction', version: '^1.1.1' },
     { name: 'Winston', value: 'winston', logFunction: 'getWinstonLogFunction', version: '^2.3.1' },
     { name: 'None of the above', value: null }
 ];
@@ -53,14 +53,14 @@ const testingFrameworks = [
 
 const assertionLibraries = [
     { name: 'Chai', value: 'chai', version: '^3.5.0' },
-    { name: 'Should.js', value: 'should', version: '^11.2.0' },
+    { name: 'Should.js', value: 'should', version: '^11.2.1' },
     { name: 'None of the above', value: null }
 ];
 
 const dependencies = {
-    'babel-core': '^6.22.1',
+    'babel-core': '^6.24.0',
     'babel-plugin-transform-decorators-legacy': '^1.3.4',
-    'babel-plugin-transform-es2015-modules-commonjs': '^6.22.0',
+    'babel-plugin-transform-es2015-modules-commonjs': '^6.24.0',
     'kikwit': '^3.7.0'
 };
 
@@ -243,9 +243,10 @@ module.exports = class extends Generator{
 
         this.fs.write('package.json', JSON.stringify(pkg, null, '\t'));   
 
-        this.fs.copy(
+        this.fs.copyTpl(
             this.templatePath('boot.js'),
-            this.destinationPath('boot.js')
+            this.destinationPath('boot.js'),
+            this.options
         );
 
         this.fs.copyTpl(
@@ -319,15 +320,9 @@ module.exports = class extends Generator{
     }   
 }
 
-function markoRenderFunction() {
+function markoRenderFunction(filePath, options, callback) {
 
-    const marko = require('marko');
-    
-    return function (filePath, options, callback) {
-
-        var template = marko.load(filePath, { writeToDisk: true });
-        
-        return template.render(options, callback);
-    }
+    const fullPath = require('path').resolve(filePath);
+    require(fullPath).renderToString(options, callback);
 }
 
