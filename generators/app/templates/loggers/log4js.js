@@ -7,13 +7,9 @@ export class Logger {
 
     constructor() {
 
-        log4js.configure({
-            appenders: [
-                { type: 'console' }
-            ]
-        });
-        
         const logger = log4js.getLogger('<%= appName %>'); 
+
+        logger.level = 'debug';
 
         Object.assign(this, logger);
         Object.setPrototypeOf(this, logger);
