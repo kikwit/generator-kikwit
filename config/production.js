@@ -6,7 +6,7 @@ export default {
     route: {
         overview: false  
     },
-    server: {
+    http: {
         port: 80
     },
     views: {
