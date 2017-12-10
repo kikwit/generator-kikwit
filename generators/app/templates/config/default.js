@@ -8,7 +8,7 @@ export default {
     route: {
         overview: true  
     },
-    server: {
+    http: {
         port: 3000
     }<% if (viewEngine) { -%>,
     views: {
